@@ -1,6 +1,7 @@
 <?php
-/* Dutch translation by Wanabo. http://www.nieuwskop.be */
+
 return array(
+	'add' => 'Het toevoegen van feeds en categorieën is <a href=\'%s\'>hierheen</a> verplaatst. Deze functionaliteit is ook toegankelijk via het menu links en via het ✚ icoon op de hoofdpagina.',
 	'api' => array(
 		'documentation' => 'Kopieer de volgende URL om deze in een externe toepassing te gebruiken.',
 		'title' => 'API',
@@ -13,34 +14,51 @@ return array(
 	'category' => array(
 		'_' => 'Categorie',
 		'add' => 'Voeg categorie toe',
+		'archiving' => 'Archiveren',
 		'empty' => 'Lege categorie',
 		'information' => 'Informatie',
-		'new' => 'Nieuwe categorie',
+		'position' => 'Weergavepositie',
+		'position_help' => 'Om de categorieweergave-sorteervolgorde te controleren',
 		'title' => 'Titel',
 	),
 	'feed' => array(
-		'add' => 'Voeg een RSS feed toe',
+		'add' => 'Voeg een RSS-feed toe',
 		'advanced' => 'Geavanceerd',
 		'archiving' => 'Archiveren',
 		'auth' => array(
 			'configuration' => 'Log in',
-			'help' => 'Verbinding toestaan toegang te krijgen tot HTTP beveiligde RSS feeds',
+			'help' => 'Verbinding toestaan toegang te krijgen tot HTTP beveiligde RSS-feeds',
 			'http' => 'HTTP Authenticatie',
 			'password' => 'HTTP wachtwoord',
 			'username' => 'HTTP gebruikers naam',
 		),
 		'clear_cache' => 'Cache altijd leegmaken',
-		'css_help' => 'Haalt verstoorde RSS feeds op (attentie, heeft meer tijd nodig!)',
-		'css_path' => 'Artikelen CSS pad op originele website',
+		'content_action' => array(
+			'_' => 'Inhoudsactie bij ophalen artikelinhoud',
+			'append' => 'Na huidige inhoud toevoegen',
+			'prepend' => 'Voor huidige inhoud toevoegen',
+			'replace' => 'Huidige inhoud vervangen',
+		),
+		'css_cookie' => 'Cookies gebruiken bij het ophalen van artikelinhoud',
+		'css_cookie_help' => 'Voorbeeld: <kbd>foo=bar; gdpr_consent=true; cookie=value</kbd>',
+		'css_help' => 'Haalt onvolledige RSS-feeds op (attentie, heeft meer tijd nodig!)',
+		'css_path' => 'CSS-pad van artikelen op originele website',
 		'description' => 'Omschrijving',
 		'empty' => 'Deze feed is leeg. Controleer of deze nog actueel is.',
 		'error' => 'Deze feed heeft problemen. Verifieer a.u.b het doeladres en actualiseer het.',
 		'filteractions' => array(
-			'_' => 'Filter actions',	//TODO - Translation
-			'help' => 'Write one search filter per line.',	//TODO - Translation
+			'_' => 'Filteracties',
+			'help' => 'Voer één zoekfilter per lijn in.',
 		),
 		'information' => 'Informatie',
-		'keep_history' => 'Minimum aantal artikelen om te houden',
+		'keep_min' => 'Minimum aantal artikelen om te houden',
+		'maintenance' => array(
+			'clear_cache' => 'Cache leegmaken',
+			'clear_cache_help' => 'Cache voor deze feed leegmaken.',
+			'reload_articles' => 'Artikels herladen',
+			'reload_articles_help' => 'Artikels herladen en complete inhoud ophalen als een selector is gedefinieerd.',
+			'title' => 'Onderhoud',
+		),
 		'moved_category_deleted' => 'Als u een categorie verwijderd, worden de feeds automatisch geclassificeerd onder <em>%s</em>.',
 		'mute' => 'demp',
 		'no_selected' => 'Geen feed geselecteerd.',
@@ -51,7 +69,12 @@ return array(
 			'main_stream' => 'Zichtbaar in het overzicht',
 			'normal' => 'Toon in categorie',
 		),
-		'websub' => 'Directe notificaties met WebSub',
+		'proxy' => 'Proxy instellen om deze feed op te halen',
+		'proxy_help' => 'Selecteer een protocol (bv. SOCKS5) en voer een proxy-adres in (b.v. <kbd>127.0.0.1:1080</kbd>)',
+		'selector_preview' => array(
+			'show_raw' => 'Broncode tonen',
+			'show_rendered' => 'Inhoud tonen',
+		),
 		'show' => array(
 			'all' => 'Alle feeds tonen',
 			'error' => 'Alleen feeds met een foutmelding tonen',
@@ -64,21 +87,25 @@ return array(
 		'think_to_add' => 'Voeg wat feeds toe.',
 		'timeout' => 'Time-out in seconden',
 		'title' => 'Titel',
-		'title_add' => 'Voeg een RSS feed toe',
+		'title_add' => 'Voeg een RSS-feed toe',
 		'ttl' => 'Vernieuw automatisch niet vaker dan',
-		'url' => 'Feed URL',
+		'url' => 'Feed-url',
+		'useragent' => 'Set the user agent for fetching this feed',	// TODO - Translation
+		'useragent_help' => 'Example: <kbd>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0)</kbd>',	// TODO - Translation
 		'validator' => 'Controleer de geldigheid van de feed',
-		'website' => 'Website URL',
+		'website' => 'Website-url',
+		'websub' => 'Directe notificaties met WebSub',
 	),
 	'firefox' => array(
 		'documentation' => 'Volg de stappen die <a href="https://developer.mozilla.org/en-US/Firefox/Releases/2/Adding_feed_readers_to_Firefox#Adding_a_new_feed_reader_manually">hier</a> beschreven worden om FreshRSS aan de Firefox-nieuwslezerlijst toe te voegen.',
+		'obsolete_63' => 'Vanaf versie 63 en nieuwer, heeft Firefox de mogelijkheid om zelf niewslezers toe te voegen verwijderd voor online diensten.',
 		'title' => 'Firefox-nieuwslezer',
 	),
 	'import_export' => array(
 		'export' => 'Exporteer',
+		'export_labelled' => 'Exporteer gelabelde artikels',
 		'export_opml' => 'Exporteer lijst van feeds (OPML)',
 		'export_starred' => 'Exporteer je favorieten',
-		'export_labelled' => 'Exporteer gelabelde artikels',
 		'feed_list' => 'Lijst van %s artikelen',
 		'file_to_import' => 'Bestand om te importeren<br />(OPML, JSON of ZIP)',
 		'file_to_import_no_zip' => 'Bestand om te importeren<br />(OPML of JSON)',
@@ -87,14 +114,28 @@ return array(
 		'title' => 'Importeren / exporteren',
 	),
 	'menu' => array(
+		'add' => 'Feed of categorie toevoegen',
+		'add_feed' => 'Feed toevoegen',
 		'bookmark' => 'Abonneer (FreshRSS bladwijzer)',
 		'import_export' => 'Importeer / exporteer',
+		'label_management' => 'Labelbeheer',
 		'subscription_management' => 'Abonnementenbeheer',
 		'subscription_tools' => 'Hulpmiddelen voor abonnementen',
 	),
+	'tag' => array(
+		'name' => 'Naam',
+		'new_name' => 'Nieuwe naam',
+		'old_name' => 'Oude naam',
+	),
 	'title' => array(
 		'_' => 'Abonnementenbeheer',
+		'add' => 'Feed of categorie toevoegen',
+		'add_category' => 'Categorie toevoegen',
+		'add_feed' => 'Feed toevoegen',
+		'add_label' => 'Label toevoegen',
+		'delete_label' => 'Label verwijderen',
 		'feed_management' => 'RSS-feedbeheer',
+		'rename_label' => 'Label hernoemen',
 		'subscription_tools' => 'Hulpmiddelen voor abonnementen',
 	),
 );

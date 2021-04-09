@@ -7,34 +7,30 @@ Il est toutefois de votre responsabilité de vérifier que votre hébergement pe
  | Logiciel         | Recommandé                                                                                                     | Fonctionne aussi avec          |
  | --------         | -----------                                                                                                    | ---------------------          |
  | Serveur web      | **Apache 2**                                                                                                   | Nginx                          |
- | PHP              | **PHP 5.5+**                                                                                                   | PHP 5.3.8+                     |
- | Modules PHP      | Requis : libxml, cURL, PDO_MySQL, PCRE et ctype<br>Requis (32 bits seulement) : GMP<br>Recommandé : JSON, Zlib, mbstring et iconv, ZipArchive<br>*Pour une liste complète des modules nécessaires voir le [Dockerfile](https://github.com/FreshRSS/FreshRSS/blob/744a9e8cf00aef7dec0acfa5f90f0dcfa2ef8837/Docker/Dockerfile-Alpine#L7-L9)* |                                |
- | Base de données  | **MySQL 5.5.3+**                                                                                               | SQLite 3.7.4+                  |
+ | PHP              | **PHP 7+**                                                                                                     | PHP 5.6+                       |
+ | Modules PHP      | Requis : libxml, cURL, JSON, PDO_MySQL, PCRE et ctype<br />Requis (32 bits seulement) : GMP<br />Recommandé : Zlib, mbstring et iconv, ZipArchive<br />*Pour une liste complète des modules nécessaires voir le [Dockerfile](https://github.com/FreshRSS/FreshRSS/blob/edge/Docker/Dockerfile-Alpine#L7-L9)* |                                |
+ | Base de données  | **MySQL 5.5.3+**                                                                                               | SQLite 3.7.4+, PostgreSQL 9.5+   |
  | Navigateur       | **Firefox**                                                                                                    | Chrome, Opera, Safari, or IE 11+ |
 
-## Note importante
-
-FreshRSS **PEUT** fonctionner sur la version de PHP 5.3.8+. En effet, nous utilisons des fonctions spécifiques pour la connexion par formulaire et notamment la [bibliothèque ''password_compat''](https://github.com/ircmaxell/password_compat#requirements).
-
-# Choisir la bonne version de FreshRSS
+## Choisir la bonne version de FreshRSS
 
 FreshRSS possède trois versions différentes (nous parlons de branches) qui sortent à des fréquences plus ou moins rapides. Aussi prenez le temps de comprendre à quoi correspond chacune de ces versions.
 
-## La version stable
+### La version stable
 
-[Téléchargement](https://github.com/FreshRSS/FreshRSS/archive/master.zip)
+[Téléchargement](https://github.com/FreshRSS/FreshRSS/archive/latest.zip)
 
 Cette version sort lorsqu’on considère qu’on a répondu à nos objectifs en terme de nouvelles fonctionnalités. Deux versions peuvent ainsi sortir de façon très rapprochée si les développeurs travaillent bien. En pratique, comme nous nous fixons de nombreux objectifs et que nous travaillons sur notre temps libre, les versions sont souvent assez espacées (plusieurs mois). Son avantage est que le code est particulièrement stable et vous ne devriez pas faire face à de méchants bugs.
 
-## La version de développement
+### La version de développement
 
-[Téléchargement](https://github.com/FreshRSS/FreshRSS/archive/dev.zip)
+[Téléchargement](https://github.com/FreshRSS/FreshRSS/archive/edge.zip)
 
-Comme son nom l’indique, il s’agit de la version sur laquelle les développeurs travaillent. **Elle est donc instable !** Si vous souhaitez recevoir les améliorations au jour le jour, vous pouvez l’utiliser, mais attention à bien suivre les évolutions sur Github (via [le flux RSS de la branche](https://github.com/FreshRSS/FreshRSS/commits/dev.atom) par exemple). On raconte que les développeurs principaux l’utilisent quotidiennement sans avoir de soucis. Sans doute savent-ils ce qu’ils font…
+Comme son nom l’indique, il s’agit de la version sur laquelle les développeurs travaillent. **Elle est donc instable !** Si vous souhaitez recevoir les améliorations au jour le jour, vous pouvez l’utiliser, mais attention à bien suivre les évolutions sur Github (via [le flux RSS de la branche](https://github.com/FreshRSS/FreshRSS/commits/edge.atom) par exemple). On raconte que les développeurs principaux l’utilisent quotidiennement sans avoir de soucis. Sans doute savent-ils ce qu’ils font…
 
-# Installation sur Apache
+## Installation sur Apache
 
-```
+```apache
 <VirtualHost *:80>
 	DocumentRoot /var/www/html/
 
@@ -88,13 +84,13 @@ Comme son nom l’indique, il s’agit de la version sur laquelle les développe
 </IfModule>
 ```
 
-# Installation sur Nginx
+## Installation sur Nginx
 
 Voici un fichier de configuration pour nginx. Il couvre la configuration pour HTTP, HTTPS, et PHP.
 
 _Vous pourrez trouver d’autres fichiers de configuration plus simples mais ces derniers ne seront peut-être pas compatibles avec l’API FreshRSS._
 
-```
+```nginx
 server {
 	listen 80;
 	listen 443 ssl;
@@ -123,7 +119,10 @@ server {
 		fastcgi_split_path_info ^(.+\.php)(/.*)$;
 		# Par défaut la variable PATH_INFO n’est pas définie sous PHP-FPM
 		# or l’API FreshRSS greader.php en a besoin. Si vous avez un “Bad Request”, vérifiez bien cette dernière !
-		fastcgi_param PATH_INFO $fastcgi_path_info;
+		# REMARQUE : l'utilisation de la variable $path_info est requis. Pour plus de détails, voir :
+		# https://trac.nginx.org/nginx/ticket/321
+		set $path_info $fastcgi_path_info;
+		fastcgi_param PATH_INFO $path_info;
 		include fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 	}
@@ -136,6 +135,6 @@ server {
 
 Pour un tutoriel pas à pas, vous pouvez suivre [cet article dédié](http://www.pihomeserver.fr/2013/05/08/raspberry-pi-home-server-installer-un-agregateur-de-flux-rss-pour-remplacer-google-reader/).
 
-# Conseils de sécurité
+## Conseils de sécurité
 
 **TODO**

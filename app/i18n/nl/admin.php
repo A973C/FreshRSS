@@ -1,5 +1,5 @@
 <?php
-/* Dutch translation by Wanabo. http://www.nieuwskop.be */
+
 return array(
 	'auth' => array(
 		'allow_anonymous' => 'Sta bezoekers toe om artikelen te lezen van de standaard gebruiker (%s)',
@@ -69,10 +69,6 @@ return array(
 		'mbstring' => array(
 			'nok' => 'De voor Unicode aanbevolen bibliotheek mbstring kan niet worden gevonden.',
 			'ok' => 'De voor Unicode aanbevolen bibliotheek mbstring is gevonden.',
-		),
-		'minz' => array(
-			'nok' => 'U mist Minz framework.',
-			'ok' => 'U hebt Minz framework.',
 		),
 		'pcre' => array(
 			'nok' => 'U mist de benodigde bibliotheek voor regular expressions (php-pcre).',
@@ -159,13 +155,14 @@ return array(
 	'system' => array(
 		'_' => 'Systeem configuratie',
 		'auto-update-url' => 'Automatische update server URL',
-		'instance-name' => 'Voorbeeld naam',
-		'max-categories' => 'Categorielimiet per gebruiker',
-		'max-feeds' => 'Feedlimiet per gebruiker',
 		'cookie-duration' => array(
 			'help' => 'in seconden',
 			'number' => 'Tijdsduur om ingelogd te blijven',
 		),
+		'force_email_validation' => 'Emailadresvalidatie forceren',
+		'instance-name' => 'Voorbeeld naam',
+		'max-categories' => 'Categorielimiet per gebruiker',
+		'max-feeds' => 'Feedlimiet per gebruiker',
 		'registration' => array(
 			'help' => '0 betekent geen account limiet',
 			'number' => 'Maximum aantal accounts',
@@ -181,10 +178,20 @@ return array(
 		'title' => 'Vernieuw systeem',
 	),
 	'user' => array(
+		'admin' => 'Beheerder',
+		'article_count' => 'Artikelen',
 		'articles_and_size' => '%s artikelen (%s)',
+		'back_to_manage' => '← Terug naar gebruikerslijst',
 		'create' => 'Creëer nieuwe gebruiker',
+		'database_size' => 'Databasegrootte',
 		'delete_users' => 'Verwijder gebruiker',
+		'email' => 'Emailadres',
+		'enabled' => 'Ingeschakeld',
+		'feed_count' => 'Feeds',
+		'is_admin' => 'Is beheerder',
 		'language' => 'Taal',
+		'last_user_activity' => 'Laatste gebruikersactiviteit',
+		'list' => 'Gebruikerslijst',
 		'number' => 'Er is %d accounts gemaakt',
 		'numbers' => 'Er zijn %d accounts gemaakt',
 		'password_form' => 'Wachtwoord<br /><small>(voor de Web-formulier loginmethode)</small>',
@@ -192,7 +199,7 @@ return array(
 		'selected' => 'Geselecteerde gebruiker',
 		'title' => 'Beheer gebruikers',
 		'update_users' => 'Gebruiker bijwerken',
-		'user_list' => 'Lijst van gebruikers ',
+		'user_list' => 'Lijst van gebruikers',
 		'username' => 'Gebruikersnaam',
 		'users' => 'Gebruikers',
 	),

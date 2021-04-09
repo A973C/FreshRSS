@@ -1,38 +1,35 @@
-version: '2.3'
+version: "3"
 
 services:
-  postgresql:
-    image: postgres:latest
+  freshrss-db:
+    image: postgres:12-alpine
+    container_name: freshrss-db
+    hostname: freshrss-db
     restart: unless-stopped
     volumes:
-    - '/path/to/pgsql-data:/var/lib/postgresql/data'
+      - db:/var/lib/postgresql/data
     environment:
-    - POSTGRES_USER=freshrss
-    - POSTGRES_PASSWORD=password
-    - POSTGRES_DB=freshrss
+      POSTGRES_USER: freshrss
+      POSTGRES_PASSWORD: freshrss
+      POSTGRES_DB: freshrss
 
-  freshrss:
+  freshrss-app:
     image: freshrss/freshrss:latest
+    container_name: freshrss-app
+    hostname: freshrss-app
     restart: unless-stopped
+    ports:
+      - "8080:80"
     depends_on:
-      - postgresql
-    networks:
-      - web
-      - default
+      - freshrss-db
     volumes:
-      - '/your/local/directory/data:/var/www/FreshRSS/data'
-    labels:
-      - "traefik.backend=freshrss"
-      - "traefik.docker.network=web"
-      - "traefik.frontend.rule=Host:rss.example.com"
-      - "traefik.enable=true"
-      - "traefik.default.protocol=http"
-      - "traefik.frontend.entryPoints=http,https"
-      - "traefik.port=80"
+      - data:/var/www/FreshRSS/data
+      - extensions:/var/www/FreshRSS/extensions
     environment:
-      - CRON_MIN=*/20
+      CRON_MIN: '*/20'
+      TZ: Europe/Paris
 
-networks:
-  web:
-    external: true
-
+volumes:
+  db:
+  data:
+  extensions:

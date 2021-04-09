@@ -33,6 +33,13 @@ return array(
 	# Name of the user that has administration rights.
 	'default_user' => '_',
 
+	# Force users to validate their email address. If `true`, an email with a
+	# validation URL is sent during registration, and users cannot access their
+	# feed if they didn't access this URL.
+	# Note: it is recommended to not enable it with PHP < 5.5 (emails cannot be
+	# sent).
+	'force_email_validation' => false,
+
 	# Allow or not visitors without login to see the articles
 	#	of the default user.
 	'allow_anonymous' => false,
@@ -47,6 +54,13 @@ return array(
 	#		if you use `http_auth`, remember to protect only `/FreshRSS/p/i/`,
 	#		and in particular not protect `/FreshRSS/p/api/` if you would like to use the API (different login system).
 	'auth_type' => 'form',
+
+	# When using http_auth, automatically register any unknown user
+	'http_auth_auto_register' => true,
+
+	# Optionally, you can specify the $_SERVER key containing the email address used when registering
+	# the user (e.g. REMOTE_USER_EMAIL).
+	'http_auth_auto_register_email_field' => '',
 
 	# Allow or not the use of the API, used for mobile apps.
 	#	End-point is https://freshrss.example.net/api/greader.php
@@ -75,7 +89,7 @@ return array(
 	'limits' => array(
 
 		# Duration in seconds of the login cookie.
-		'cookie_duration' => 2592000,
+		'cookie_duration' => FreshRSS_Auth::DEFAULT_COOKIE_DURATION,
 
 		# Duration in seconds of the SimplePie cache,
 		#	during which a query to the RSS feed will return the local cached version.
@@ -95,7 +109,7 @@ return array(
 		# Max number of categories for a user.
 		'max_categories' => 16384,
 
-		# Max number of accounts that anonymous users can create
+		# Max number of accounts that anonymous users can create (only for Web form login type)
 		#   0 for an unlimited number of accounts
 		#   1 is to not allow user registrations (1 is corresponding to the admin account)
 		'max_registrations' => 1,
@@ -116,38 +130,62 @@ return array(
 		//CURLOPT_PROXYUSERPWD => 'user:password',
 	),
 
-	'db' => array(
+	'db' => [
 
-		# Type of database: `sqlite` or `mysql`.
+		# Type of database: `sqlite` or `mysql` or 'pgsql'
 		'type' => 'sqlite',
 
-		# MySQL host.
+		# Database server
 		'host' => 'localhost',
 
-		# MySQL user.
+		# Database user
 		'user' => '',
 
-		# MySQL password.
+		# Database password
 		'password' => '',
 
-		# MySQL database.
+		# Database name
 		'base' => '',
 
-		# MySQL table prefix.
+		# Tables prefix (useful if you use the same database for multiple things)
 		'prefix' => 'freshrss_',
 
-		'pdo_options' => array(
+		# Additional connection string parameters, such as PostgreSQL 'sslmode=??;sslrootcert=??'
+		# https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-PARAMKEYWORDS
+		'connection_uri_params' => '',
+
+		# Additional PDO parameters, such as offered by MySQL https://php.net/ref.pdo-mysql
+		'pdo_options' => [
 			//PDO::MYSQL_ATTR_SSL_KEY	=> '/path/to/client-key.pem',
 			//PDO::MYSQL_ATTR_SSL_CERT	=> '/path/to/client-cert.pem',
 			//PDO::MYSQL_ATTR_SSL_CA	=> '/path/to/ca-cert.pem',
-		),
+		],
 
+	],
+
+	# Configuration to send emails. Be aware that PHP < 5.5 are not supported.
+	# These options are basically a mapping of the PHPMailer class attributes
+	# from the PHPMailer library.
+	#
+	# See http://phpmailer.github.io/PHPMailer/classes/PHPMailer.PHPMailer.PHPMailer.html#properties
+	'mailer' => 'mail', // 'mail' or 'smtp'
+	'smtp' => array(
+		'hostname' => '', // the domain used in the Message-ID header
+		'host' => 'localhost', // the SMTP server address
+		'port' => 25,
+		'auth' => false,
+		'auth_type' => '', // 'CRAM-MD5', 'LOGIN', 'PLAIN', 'XOAUTH2' or ''
+		'username' => '',
+		'password' => '',
+		'secure' => '', // '', 'ssl' or 'tls'
+		'from' => 'root@localhost',
 	),
 
 	# List of enabled FreshRSS extensions.
-	'extensions_enabled' => array(
+	'extensions_enabled' => [
+		'Google-Groups' => true,
 		'Tumblr-GDPR' => true,
-	),
+	],
 
 	# Disable self-update,
 	'disable_update' => false,

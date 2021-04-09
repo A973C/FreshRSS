@@ -67,12 +67,8 @@ return array(
 			'ok' => 'Estensione JSON presente.',
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'Manca il framework Minz.',
-			'ok' => 'Framework Minz presente.',
+			'nok' => 'Cannot find the recommended mbstring library for Unicode.',	// TODO - Translation
+			'ok' => 'You have the recommended mbstring library for Unicode.',	// TODO - Translation
 		),
 		'pcre' => array(
 			'nok' => 'Manca una libreria richiesta per le regular expressions (php-pcre).',
@@ -106,23 +102,23 @@ return array(
 		),
 	),
 	'extensions' => array(
-		'author' => 'Author',	//TODO - Translation
-		'community' => 'Available community extensions',	//TODO - Translation
-		'description' => 'Description',	//TODO - Translation
+		'author' => 'Author',	// TODO - Translation
+		'community' => 'Available community extensions',	// TODO - Translation
+		'description' => 'Description',	// TODO - Translation
 		'disabled' => 'Disabilitata',
 		'empty_list' => 'Non ci sono estensioni installate',
 		'enabled' => 'Abilitata',
-		'latest' => 'Installed',	//TODO - Translation
-		'name' => 'Name',	//TODO - Translation
+		'latest' => 'Installed',	// TODO - Translation
+		'name' => 'Name',	// TODO - Translation
 		'no_configure_view' => 'Questa estensioni non può essere configurata.',
 		'system' => array(
 			'_' => 'Estensioni di sistema',
 			'no_rights' => 'Estensione di sistema (non hai i permessi su questo tipo)',
 		),
 		'title' => 'Estensioni',
-		'update' => 'Update available',	//TODO - Translation
+		'update' => 'Update available',	// TODO - Translation
 		'user' => 'Estensioni utente',
-		'version' => 'Version',	//TODO - Translation
+		'version' => 'Version',	// TODO - Translation
 	),
 	'stats' => array(
 		'_' => 'Statistiche',
@@ -135,7 +131,7 @@ return array(
 		'entry_per_hour' => 'Per ora (media: %.2f articoli)',
 		'entry_per_month' => 'Per mese (media: %.2f articoli)',
 		'entry_repartition' => 'Ripartizione contenuti',
-		'feed' => 'Feed',
+		'feed' => 'Feed',	// TODO - Translation
 		'feed_per_category' => 'Feeds per categoria',
 		'idle' => 'Feeds non aggiornati',
 		'main' => 'Statistiche principali',
@@ -158,14 +154,15 @@ return array(
 	),
 	'system' => array(
 		'_' => 'Configurazione di sistema',
-		'auto-update-url' => 'Auto-update server URL',	//TODO - Translation
+		'auto-update-url' => 'Auto-update server URL',	// TODO - Translation
+		'cookie-duration' => array(
+			'help' => 'in seconds',	// TODO - Translation
+			'number' => 'Duration to keep logged in',	// TODO - Translation
+		),
+		'force_email_validation' => 'Force email address validation',	// TODO - Translation
 		'instance-name' => 'Nome istanza',
 		'max-categories' => 'Limite categorie per utente',
 		'max-feeds' => 'Limite feeds per utente',
-		'cookie-duration' => array(
-			'help' => 'in seconds', // @todo translate
-			'number' => 'Duration to keep logged in', // @todo translate
-		),
 		'registration' => array(
 			'help' => '0 significa che non esiste limite sui profili',
 			'number' => 'Numero massimo di profili',
@@ -181,17 +178,27 @@ return array(
 		'title' => 'Aggiorna sistema',
 	),
 	'user' => array(
+		'admin' => 'Administrator',	// TODO - Translation
+		'article_count' => 'Articles',	// TODO - Translation
 		'articles_and_size' => '%s articoli (%s)',
+		'back_to_manage' => '← Return to user list',	// TODO - Translation
 		'create' => 'Crea nuovo utente',
-		'delete_users' => 'Delete user',	//TODO - Translation
+		'database_size' => 'Database size',	// TODO - Translation
+		'delete_users' => 'Delete user',	// TODO - Translation
+		'email' => 'Email address',	// TODO - Translation
+		'enabled' => 'Enabled',	// TODO - Translation
+		'feed_count' => 'Feeds',	// TODO - Translation
+		'is_admin' => 'Is admin',	// TODO - Translation
 		'language' => 'Lingua',
+		'last_user_activity' => 'Last user activity',	// TODO - Translation
+		'list' => 'User list',	// TODO - Translation
 		'number' => ' %d profilo utente creato',
 		'numbers' => 'Sono presenti %d profili utente',
 		'password_form' => 'Password<br /><small>(per il login classico)</small>',
 		'password_format' => 'Almeno 7 caratteri',
-		'selected' => 'Selected user',	//TODO - Translation
+		'selected' => 'Selected user',	// TODO - Translation
 		'title' => 'Gestione utenti',
-		'update_users' => 'Update user',	//TODO - Translation
+		'update_users' => 'Update user',	// TODO - Translation
 		'user_list' => 'Lista utenti',
 		'username' => 'Nome utente',
 		'users' => 'Utenti',

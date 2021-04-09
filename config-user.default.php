@@ -1,11 +1,23 @@
 <?php
 
+# Do not modify this file, which defines default values, but create a
+# `./data/config-user.custom.php` file instead, containing the keys you want to
+# override.
 return array (
+	'enabled' => true,
+	'is_admin' => false,
 	'language' => 'en',
-	'old_entries' => 3,
-	'keep_history_default' => 50,
+	'archiving' => [
+		'keep_period' => 'P3M',
+		'keep_max' => 200,
+		'keep_min' => 50,
+		'keep_favourites' => true,
+		'keep_labels' => true,
+		'keep_unreads' => false,
+	],
 	'ttl_default' => 3600,
 	'mail_login' => '',
+	'email_validation_token' => '',
 	'token' => '',
 	'passwordHash' => '',
 	'apiPasswordHash' => '',
@@ -13,14 +25,14 @@ return array (
 	'feverKey' => '',
 	'posts_per_page' => 20,
 	'since_hours_posts_per_rss' => 168,
-	'min_posts_per_rss' => 2,
 	'max_posts_per_rss' => 400,
 	'view_mode' => 'normal',
 	'default_view' => 'adaptive',
 	'default_state' => FreshRSS_Entry::STATE_NOT_READ,
+	'show_fav_unread' => false,
 	'auto_load_more' => true,
 	'display_posts' => false,
-	'display_categories' => false,
+	'display_categories' => 'active',	//{ active, remember, all, none }
 	'hide_read_feeds' => true,
 	'onread_jump_next' => true,
 	'lazyload' => true,
@@ -64,9 +76,12 @@ return array (
 		'global_view' => '2',
 		'reading_view' => '3',
 		'rss_view' => '4',
+		'toggle_media' => 'v',
 	),
+	'show_favicons' => true,
 	'topline_read' => true,
 	'topline_favorite' => true,
+	'topline_display_authors' => false,
 	'topline_date' => true,
 	'topline_link' => true,
 	'bottomline_read' => true,

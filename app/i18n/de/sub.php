@@ -1,6 +1,7 @@
 <?php
 
 return array(
+	'add' => 'Die Erstellung von Kategorien und Feeds wurde verschoben und findet sich ab sofort <a href=\'%s\'>hier</a>. Zusätzlich ist ein Zugriff über den linken Menüpunkt oder über das ✚ Symbol auf der Hauptseite möglich.',
 	'api' => array(
 		'documentation' => 'Kopieren Sie die folgende URL, um sie in einem externen Tool zu verwenden.',
 		'title' => 'API',
@@ -13,9 +14,11 @@ return array(
 	'category' => array(
 		'_' => 'Kategorie',
 		'add' => 'Eine Kategorie hinzufügen',
+		'archiving' => 'Archivierung',
 		'empty' => 'Leere Kategorie',
 		'information' => 'Information',
-		'new' => 'Neue Kategorie',
+		'position' => 'Reihenfolge',
+		'position_help' => 'Steuert die Kategoriesortierung',
 		'title' => 'Titel',
 	),
 	'feed' => array(
@@ -30,17 +33,32 @@ return array(
 			'username' => 'HTTP-Nutzername',
 		),
 		'clear_cache' => 'Nicht cachen (für defekte Feeds)',
-		'css_help' => 'Ruft gekürzte RSS-Feeds ab (Achtung, benötigt mehr Zeit!)',
-		'css_path' => 'Pfad zur CSS-Datei des Artikels auf der Original-Webseite',
+		'content_action' => array(
+			'_' => 'Behandlung von Feed-Inhalt beim Herunterladen von Artikelinhalt',
+			'append' => 'Artikelinhalt nach Feed-Inhalt hinzufügen',
+			'prepend' => 'Artikelinhalt vor Feed-Inhalt hinzufügen',
+			'replace' => 'Artikelinhalt ersetzt Feed-Inhalt (Standard)',
+		),
+		'css_cookie' => 'Verwende Cookies beim Herunterladen des Feed-Inhalts mit CSS-Filtern',
+		'css_cookie_help' => 'Beispiel: <kbd>foo=bar; gdpr_consent=true; cookie=value</kbd>',
+		'css_help' => 'Ruft bei gekürzten RSS-Feeds den vollständigen Artikelinhalt ab (Achtung, benötigt mehr Zeit!)',
+		'css_path' => 'CSS-Selektor des Artikelinhaltes auf der Original-Webseite',
 		'description' => 'Beschreibung',
 		'empty' => 'Dieser Feed ist leer. Bitte stellen Sie sicher, dass er noch gepflegt wird.',
 		'error' => 'Dieser Feed ist auf ein Problem gestoßen. Bitte stellen Sie sicher, dass er immer lesbar ist und aktualisieren Sie ihn dann.',
 		'filteractions' => array(
-			'_' => 'Filter actions',	//TODO - Translation
-			'help' => 'Write one search filter per line.',	//TODO - Translation
+			'_' => 'Filteraktionen',
+			'help' => 'Ein Suchfilter pro Zeile',
 		),
 		'information' => 'Information',
-		'keep_history' => 'Minimale Anzahl an Artikeln, die behalten wird',
+		'keep_min' => 'Minimale Anzahl an Artikeln, die behalten wird',
+		'maintenance' => array(
+			'clear_cache' => 'Zwischenspeicher leeren',
+			'clear_cache_help' => 'Zwischenspeicher für diesen Feed leeren.',
+			'reload_articles' => 'Artikel neuladen',
+			'reload_articles_help' => 'Artikel neuladen und komplette Inhalte holen, wenn ein Selektor festgelegt wurde.',
+			'title' => 'Wartung',
+		),
 		'moved_category_deleted' => 'Wenn Sie eine Kategorie entfernen, werden deren Feeds automatisch in die Kategorie <em>%s</em> eingefügt.',
 		'mute' => 'Stumm schalten',
 		'no_selected' => 'Kein Feed ausgewählt.',
@@ -51,13 +69,18 @@ return array(
 			'main_stream' => 'In Haupt-Feeds zeigen',
 			'normal' => 'Zeige in eigener Kategorie',
 		),
-		'websub' => 'Sofortbenachrichtigung mit WebSub',
+		'proxy' => 'Verwende einen Proxy, um den Feed abzuholen',
+		'proxy_help' => 'Wähle ein Protokoll (z.B. SOCKS5) und einen Proxy mit Port (z.B. <kbd>127.0.0.1:1080</kbd>)',
+		'selector_preview' => array(
+			'show_raw' => 'Quellcode anzeigen',
+			'show_rendered' => 'Inhalt anzeigen',
+		),
 		'show' => array(
-			'all' => 'Show all feeds',	//TODO - Translation
-			'error' => 'Show only feeds with error',	//TODO - Translation
+			'all' => 'Alle Feeds zeigen',
+			'error' => 'Nur Feeds mit Fehlern zeigen',
 		),
 		'showing' => array(
-			'error' => 'Showing only feeds with error',	//TODO - Translation
+			'error' => 'Nur Feeds mit Fehlern zeigen',
 		),
 		'ssl_verify' => 'Überprüfe SSL Sicherheit',
 		'stats' => 'Statistiken',
@@ -67,18 +90,22 @@ return array(
 		'title_add' => 'Einen RSS-Feed hinzufügen',
 		'ttl' => 'Aktualisiere automatisch nicht öfter als',
 		'url' => 'Feed-URL',
+		'useragent' => 'Set the user agent for fetching this feed',	// TODO - Translation
+		'useragent_help' => 'Example: <kbd>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0)</kbd>',	// TODO - Translation
 		'validator' => 'Überprüfen Sie die Gültigkeit des Feeds',
 		'website' => 'Webseiten-URL',
+		'websub' => 'Sofortbenachrichtigung mit WebSub',
 	),
 	'firefox' => array(
 		'documentation' => 'Folge den <a href="https://developer.mozilla.org/en-US/Firefox/Releases/2/Adding_feed_readers_to_Firefox#Adding_a_new_feed_reader_manually">hier</a> beschriebenen Schritten um FreshRSS zu Deiner Firefox RSS-Reader Liste hinzuzufügen.',
+		'obsolete_63' => 'Seit Version 63 hat Firefox die Möglichkeit entfernt, Dienste hinzuzufügen, die keine eigenständigen Anwendungen sind.',
 		'title' => 'Firefox RSS-Reader',
 	),
 	'import_export' => array(
 		'export' => 'Exportieren',
+		'export_labelled' => 'Artikel mit Labeln exportieren',
 		'export_opml' => 'Liste der Feeds exportieren (OPML)',
 		'export_starred' => 'Ihre Favoriten exportieren',
-		'export_labelled' => 'Export your labelled articles',	//TODO
 		'feed_list' => 'Liste von %s Artikeln',
 		'file_to_import' => 'Zu importierende Datei<br />(OPML, JSON oder ZIP)',
 		'file_to_import_no_zip' => 'Zu importierende Datei<br />(OPML oder JSON)',
@@ -87,14 +114,28 @@ return array(
 		'title' => 'Importieren / Exportieren',
 	),
 	'menu' => array(
+		'add' => 'Feed oder Kategorie hinzufügen',
+		'add_feed' => 'Feed hinzufügen',
 		'bookmark' => 'Abonnieren (FreshRSS-Lesezeichen)',
 		'import_export' => 'Importieren / Exportieren',
+		'label_management' => 'Labelverwaltung',
 		'subscription_management' => 'Abonnementverwaltung',
 		'subscription_tools' => 'Abonnement-Tools',
 	),
+	'tag' => array(
+		'name' => 'Name',
+		'new_name' => 'Alter Name',
+		'old_name' => 'Neuer Name',
+	),
 	'title' => array(
 		'_' => 'Abonnementverwaltung',
+		'add' => 'Feed oder Kategorie hinzufügen',
+		'add_category' => 'Kategorie hinzufügen',
+		'add_feed' => 'Feed hinzufügen',
+		'add_label' => 'Label hinzufügen',
+		'delete_label' => 'Label löschen',
 		'feed_management' => 'Verwaltung der RSS-Feeds',
+		'rename_label' => 'Label umbenennen',
 		'subscription_tools' => 'Abonnement-Tools',
 	),
 );

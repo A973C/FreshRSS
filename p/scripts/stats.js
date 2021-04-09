@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 "use strict";
 /* globals Flotr, numberFormat */
 /* jshint esversion:6, strict:global */
@@ -31,7 +32,7 @@ function initStats() {
 			grid: {verticalLines: false},
 			xaxis: {noTicks: 6, showLabels: false, tickDecimals: 0, min: -30.75, max: -0.25},
 			yaxis: {min: 0},
-			mouse: {relative: true, track: true, trackDecimals: 0, trackFormatter: function(obj) {return numberFormat(obj.y);}}
+			mouse: {relative: true, track: true, trackDecimals: 0, trackFormatter: function (obj) { return numberFormat(obj.y); }},
 		});
 	// Feed per category
 	Flotr.draw(document.getElementById('statsFeedPerCategory'),
@@ -41,7 +42,9 @@ function initStats() {
 			pie: {explode: 10, show: true, labelFormatter: function(){return '';}},
 			xaxis: {showLabels: false},
 			yaxis: {showLabels: false},
-			mouse: {relative: true, track: true, trackDecimals: 0, trackFormatter: function(obj) {return obj.series.label + ' - '+ numberFormat(obj.y) + ' ('+ (obj.fraction * 100).toFixed(1) + '%)';}},
+			mouse: {relative: true, track: true, trackDecimals: 0, trackFormatter: function (obj) {
+				return obj.series.label + ' - ' + numberFormat(obj.y) + ' (' + (obj.fraction * 100).toFixed(1) + '%)';
+			}},
 			legend: {container: document.getElementById('statsFeedPerCategoryLegend'), noColumns: 3}
 		});
 	// Entry per category
@@ -49,11 +52,14 @@ function initStats() {
 		stats.entryByCategory,
 		{
 			grid: {verticalLines: false, horizontalLines: false},
-			pie: {explode: 10, show: true, labelFormatter: function(){return '';}},
+			pie: {explode: 10, show: true, labelFormatter: function () { return ''; }},
 			xaxis: {showLabels: false},
 			yaxis: {showLabels: false},
-			mouse: {relative: true, track: true, trackDecimals: 0, trackFormatter: function(obj) {return obj.series.label + ' - '+ numberFormat(obj.y) + ' ('+ (obj.fraction * 100).toFixed(1) + '%)';}},
+			mouse: {relative: true, track: true, trackDecimals: 0, trackFormatter: function (obj) {
+				return obj.series.label + ' - ' + numberFormat(obj.y) + ' (' + (obj.fraction * 100).toFixed(1) + '%)';
+			}},
 			legend: {container: document.getElementById('statsEntryPerCategoryLegend'), noColumns: 3}
 		});
 }
 initStats();
+// @license-end

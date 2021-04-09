@@ -64,15 +64,11 @@ return array(
 		'files' => '파일 시스템 설치 요구사항',
 		'json' => array(
 			'nok' => 'JSON 확장 기능을 찾을 수 없습니다 (php-json 패키지).',
-			'ok' => 'JSON  확장 기능이 설치되어 있습니다.',
+			'ok' => 'JSON 확장 기능이 설치되어 있습니다.',
 		),
 		'mbstring' => array(
 			'nok' => '유니코드 지원을 위한 mbstring 라이브러리를 찾을 수 없습니다.',
 			'ok' => '유니코드 지원을 위한 mbstring 라이브러리가 설치되어 있습니다.',
-		),
-		'minz' => array(
-			'nok' => 'Minz 프레임워크를 찾을 수 없습니다.',
-			'ok' => 'Minz 프레임워크가 설치되어 있습니다.',
 		),
 		'pcre' => array(
 			'nok' => '정규표현식을 위한 라이브러리를 찾을 수 없습니다 (php-pcre).',
@@ -159,13 +155,14 @@ return array(
 	'system' => array(
 		'_' => '시스템 설정',
 		'auto-update-url' => '자동 업데이트 서버 URL',
-		'instance-name' => '인스턴스 이름',
-		'max-categories' => '사용자별 카테고리 개수 제한',
-		'max-feeds' => '사용자별 피드 개수 제한',
 		'cookie-duration' => array(
 			'help' => '초',
 			'number' => '로그인 유지 시간',
 		),
+		'force_email_validation' => 'Force email address validation',	// TODO - Translation
+		'instance-name' => '인스턴스 이름',
+		'max-categories' => '사용자별 카테고리 개수 제한',
+		'max-feeds' => '사용자별 피드 개수 제한',
 		'registration' => array(
 			'help' => '0: 제한 없음',
 			'number' => '계정 최대 개수',
@@ -181,10 +178,20 @@ return array(
 		'title' => '업데이트',
 	),
 	'user' => array(
+		'admin' => 'Administrator',	// TODO - Translation
+		'article_count' => 'Articles',	// TODO - Translation
 		'articles_and_size' => '%s 개의 글 (%s)',
+		'back_to_manage' => '← Return to user list',	// TODO - Translation
 		'create' => '새 사용자 생성',
+		'database_size' => 'Database size',	// TODO - Translation
 		'delete_users' => '사용자 삭제',
+		'email' => 'Email address',	// TODO - Translation
+		'enabled' => 'Enabled',	// TODO - Translation
+		'feed_count' => 'Feeds',	// TODO - Translation
+		'is_admin' => 'Is admin',	// TODO - Translation
 		'language' => '언어',
+		'last_user_activity' => 'Last user activity',	// TODO - Translation
+		'list' => 'User list',	// TODO - Translation
 		'number' => '%d 개의 계정이 생성되었습니다',
 		'numbers' => '%d 개의 계정이 생성되었습니다',
 		'password_form' => '암호<br /><small>(웹폼 로그인 방식 사용시)</small>',

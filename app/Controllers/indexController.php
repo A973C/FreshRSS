@@ -32,6 +32,13 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 			Minz_Error::error(404);
 		}
 
+		$this->_csp([
+			'default-src' => "'self'",
+			'frame-src' => '*',
+			'img-src' => '* data:',
+			'media-src' => '*',
+		]);
+
 		$this->view->categories = FreshRSS_Context::$categories;
 
 		$this->view->rss_title = FreshRSS_Context::$name . ' | ' . Minz_View::title();
@@ -40,6 +47,8 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 			$title = '(' . FreshRSS_Context::$get_unread . ') ' . $title;
 		}
 		Minz_View::prependTitle($title . ' · ');
+
+		FreshRSS_Context::$id_max = time() . '000000';
 
 		$this->view->callbackBeforeFeeds = function ($view) {
 			try {
@@ -54,34 +63,25 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 			}
 		};
 
-		$this->view->callbackBeforePagination = function ($view) {
+		$this->view->callbackBeforeEntries = function ($view) {
 			try {
 				FreshRSS_Context::$number++;	//+1 for pagination
-				$entries = FreshRSS_index_Controller::listEntriesByContext();
+				$view->entries = FreshRSS_index_Controller::listEntriesByContext();
 				FreshRSS_Context::$number--;
-
-				$nb_entries = count($entries);
-				if ($nb_entries > FreshRSS_Context::$number) {
-					// We have more elements for pagination
-					$last_entry = array_pop($entries);
-					FreshRSS_Context::$next_id = $last_entry->id();
-				}
-
-				$first_entry = $nb_entries > 0 ? $entries[0] : null;
-				FreshRSS_Context::$id_max = $first_entry === null ? (time() - 1) . '000000' : $first_entry->id();
-				if (FreshRSS_Context::$order === 'ASC') {
-					// In this case we do not know but we guess id_max
-					$id_max = (time() - 1) . '000000';
-					if (strcmp($id_max, FreshRSS_Context::$id_max) > 0) {
-						FreshRSS_Context::$id_max = $id_max;
-					}
-				}
-
-				$view->entries = $entries;
+				ob_start();	//Buffer "one entry at a time"
 			} catch (FreshRSS_EntriesGetter_Exception $e) {
 				Minz_Log::notice($e->getMessage());
 				Minz_Error::error(404);
 			}
+		};
+
+		$this->view->callbackBeforePagination = function ($view, $nbEntries, $lastEntry) {
+			if ($nbEntries >= FreshRSS_Context::$number) {
+				//We have enough entries: we discard the last one to use it for the next pagination
+				ob_clean();
+				FreshRSS_Context::$next_id = $lastEntry->id();
+			}
+			ob_end_flush();
 		};
 	}
 
@@ -121,6 +121,13 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 			$title = '(' . FreshRSS_Context::$get_unread . ') ' . $title;
 		}
 		Minz_View::prependTitle($title . ' · ');
+
+		$this->_csp([
+			'default-src' => "'self'",
+			'frame-src' => '*',
+			'img-src' => '* data:',
+			'media-src' => '*',
+		]);
 	}
 
 	/**
@@ -155,7 +162,7 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 		// No layout for RSS output.
 		$this->view->url = PUBLIC_TO_INDEX_PATH . '/' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']);
 		$this->view->rss_title = FreshRSS_Context::$name . ' | ' . Minz_View::title();
-		$this->view->_useLayout(false);
+		$this->view->_layout(false);
 		header('Content-Type: application/rss+xml; charset=utf-8');
 	}
 
@@ -173,7 +180,7 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 	private function updateContext() {
 		if (empty(FreshRSS_Context::$categories)) {
 			$catDAO = FreshRSS_Factory::createCategoryDao();
-			FreshRSS_Context::$categories = $catDAO->listCategories();
+			FreshRSS_Context::$categories = $catDAO->listSortedCategories();
 		}
 
 		// Update number of read / unread variables.
@@ -233,23 +240,13 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 			$limit = FreshRSS_Context::$user_conf->max_posts_per_rss;
 		}
 
-		$entries = $entryDAO->listWhere(
-			$type, $id, FreshRSS_Context::$state, FreshRSS_Context::$order,
-			$limit, FreshRSS_Context::$first_id,
-			FreshRSS_Context::$search, $date_min
-		);
-
-		if (FreshRSS_Context::$sinceHours && (count($entries) < FreshRSS_Context::$user_conf->min_posts_per_rss)) {
-			$date_min = 0;
-			$limit = FreshRSS_Context::$user_conf->min_posts_per_rss;
-			$entries = $entryDAO->listWhere(
-				$type, $id, FreshRSS_Context::$state, FreshRSS_Context::$order,
-				$limit, FreshRSS_Context::$first_id,
-				FreshRSS_Context::$search, $date_min
-			);
+		foreach ($entryDAO->listWhere(
+					$type, $id, FreshRSS_Context::$state, FreshRSS_Context::$order,
+					$limit, FreshRSS_Context::$first_id,
+					FreshRSS_Context::$search, $date_min)
+				as $entry) {
+			yield $entry;
 		}
-
-		return $entries;
 	}
 
 	/**
@@ -257,6 +254,23 @@ class FreshRSS_index_Controller extends Minz_ActionController {
 	 */
 	public function aboutAction() {
 		Minz_View::prependTitle(_t('index.about.title') . ' · ');
+	}
+
+	/**
+	 * This action displays the EULA page of FreshRSS.
+	 * This page is enabled only if admin created a data/tos.html file.
+	 * The content of the page is the content of data/tos.html.
+	 * It returns 404 if there is no EULA.
+	 */
+	public function tosAction() {
+		$terms_of_service = file_get_contents(join_path(DATA_PATH, 'tos.html'));
+		if (!$terms_of_service) {
+			Minz_Error::error(404);
+		}
+
+		$this->view->terms_of_service = $terms_of_service;
+		$this->view->can_register = !max_registrations_reached();
+		Minz_View::prependTitle(_t('index.tos.title') . ' · ');
 	}
 
 	/**

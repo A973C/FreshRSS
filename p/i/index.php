@@ -23,12 +23,13 @@
 require(__DIR__ . '/../../constants.php');
 require(LIB_PATH . '/lib_rss.php');	//Includes class autoloader
 
-if (file_exists(DATA_PATH . '/do-install.txt')) {
+$migrations_path = APP_PATH . '/migrations';
+$applied_migrations_path = DATA_PATH . '/applied_migrations.txt';
+
+if (!file_exists($applied_migrations_path)) {
 	require(APP_PATH . '/install.php');
 } else {
 	session_cache_limiter('');
-	Minz_Session::init('FreshRSS');
-	Minz_Session::_param('keepAlive', 1);	//To prevent the PHP session from expiring
 
 	if (!file_exists(DATA_PATH . '/no-cache.txt')) {
 		require(LIB_PATH . '/http-conditional.php');
@@ -38,19 +39,32 @@ if (file_exists(DATA_PATH . '/do-install.txt')) {
 			@filemtime(join_path(DATA_PATH, 'config.php'))
 		);
 		if (httpConditional($dateLastModification, 0, 0, false, PHP_COMPRESSION, true)) {
+			Minz_Session::init('FreshRSS');
+			Minz_Session::_param('keepAlive', 1);	//To prevent the PHP session from expiring
 			exit();	//No need to send anything
 		}
 	}
 
+	$error = false;
 	try {
-		$front_controller = new FreshRSS();
-		$front_controller->init();
-		$front_controller->run();
+		// Apply the migrations if any
+		$result = Minz_Migrator::execute($migrations_path, $applied_migrations_path);
+		if ($result === true) {
+			FreshRSS_Context::initSystem();
+			$front_controller = new FreshRSS();
+			$front_controller->init();
+			Minz_Session::_param('keepAlive', 1);	//To prevent the PHP session from expiring
+			$front_controller->run();
+		} else {
+			$error = $result;
+		}
 	} catch (Exception $e) {
-		echo '### Fatal error! ###<br />', "\n";
-		Minz_Log::error($e->getMessage());
-		echo 'See logs files.';
-		prepareSyslog();
-		syslog(LOG_INFO, 'FreshRSS Fatal error! ' . $e->getMessage());
+		$error = $e->getMessage();
+	}
+
+	if ($error) {
+		Minz_Log::error($error);
+		errorMessage('Fatal error');
+		syslog(LOG_INFO, 'FreshRSS Fatal error! ' . $error);
 	}
 }

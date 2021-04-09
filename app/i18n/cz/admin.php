@@ -67,12 +67,8 @@ return array(
 			'ok' => 'Máte rozšíření JSON.',
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'Nemáte framework Minz.',
-			'ok' => 'Máte framework Minz.',
+			'nok' => 'Cannot find the recommended mbstring library for Unicode.',	// TODO - Translation
+			'ok' => 'You have the recommended mbstring library for Unicode.',	// TODO - Translation
 		),
 		'pcre' => array(
 			'nok' => 'Nemáte požadovanou knihovnu pro regulární výrazy (php-pcre).',
@@ -106,23 +102,23 @@ return array(
 		),
 	),
 	'extensions' => array(
-		'author' => 'Author',	//TODO - Translation
-		'community' => 'Available community extensions',	//TODO - Translation
-		'description' => 'Description',	//TODO - Translation
+		'author' => 'Author',	// TODO - Translation
+		'community' => 'Available community extensions',	// TODO - Translation
+		'description' => 'Description',	// TODO - Translation
 		'disabled' => 'Vypnuto',
 		'empty_list' => 'Není naistalováno žádné rozšíření',
 		'enabled' => 'Zapnuto',
-		'latest' => 'Installed',	//TODO - Translation
-		'name' => 'Name',	//TODO - Translation
+		'latest' => 'Installed',	// TODO - Translation
+		'name' => 'Name',	// TODO - Translation
 		'no_configure_view' => 'Toto rozšíření nemá žádné možnosti nastavení.',
 		'system' => array(
 			'_' => 'Systémová rozšíření',
 			'no_rights' => 'Systémová rozšíření (na ně nemáte oprávnění)',
 		),
 		'title' => 'Rozšíření',
-		'update' => 'Update available',	//TODO - Translation
+		'update' => 'Update available',	// TODO - Translation
 		'user' => 'Uživatelská rozšíření',
-		'version' => 'Version',	//TODO - Translation
+		'version' => 'Version',	// TODO - Translation
 	),
 	'stats' => array(
 		'_' => 'Statistika',
@@ -157,15 +153,16 @@ return array(
 		'top_feed' => 'Top ten kanálů',
 	),
 	'system' => array(
-		'_' => 'System configuration', //TODO - Translation
-		'auto-update-url' => 'Auto-update server URL', //TODO - Translation
+		'_' => 'System configuration',	// TODO - Translation
+		'auto-update-url' => 'Auto-update server URL',	// TODO - Translation
 		'cookie-duration' => array(
-			'help' => 'in seconds', //TODO - Translation
-			'number' => 'Duration to keep logged in', //TODO - Translation
+			'help' => 'in seconds',	// TODO - Translation
+			'number' => 'Duration to keep logged in',	// TODO - Translation
 		),
-		'instance-name' => 'Instance name', //TODO - Translation
-		'max-categories' => 'Categories per user limit', //TODO - Translation
-		'max-feeds' => 'Feeds per user limit', //TODO - Translation
+		'force_email_validation' => 'Force email address validation',	// TODO - Translation
+		'instance-name' => 'Instance name',	// TODO - Translation
+		'max-categories' => 'Max number of categories per user',	// TODO - Translation
+		'max-feeds' => 'Max number of feeds per user',	// TODO - Translation
 		'registration' => array(
 			'help' => '0 znamená žádná omezení účtu',
 			'number' => 'Maximální počet účtů',
@@ -181,17 +178,27 @@ return array(
 		'title' => 'Aktualizovat systém',
 	),
 	'user' => array(
+		'admin' => 'Administrator',	// TODO - Translation
+		'article_count' => 'Articles',	// TODO - Translation
 		'articles_and_size' => '%s článků (%s)',
+		'back_to_manage' => '← Return to user list',	// TODO - Translation
 		'create' => 'Vytvořit nového uživatele',
-		'delete_users' => 'Delete user',	//TODO - Translation
+		'database_size' => 'Database size',	// TODO - Translation
+		'delete_users' => 'Delete user',	// TODO - Translation
+		'email' => 'Email address',	// TODO - Translation
+		'enabled' => 'Enabled',	// TODO - Translation
+		'feed_count' => 'Feeds',	// TODO - Translation
+		'is_admin' => 'Is admin',	// TODO - Translation
 		'language' => 'Jazyk',
+		'last_user_activity' => 'Last user activity',	// TODO - Translation
+		'list' => 'User list',	// TODO - Translation
 		'number' => 'Zatím je vytvořen %d účet',
 		'numbers' => 'Zatím je vytvořeno %d účtů',
 		'password_form' => 'Heslo<br /><small>(pro přihlášení webovým formulářem)</small>',
 		'password_format' => 'Alespoň 7 znaků',
-		'selected' => 'Selected user',	//TODO - Translation
+		'selected' => 'Selected user',	// TODO - Translation
 		'title' => 'Správa uživatelů',
-		'update_users' => 'Update user',	//TODO - Translation
+		'update_users' => 'Update user',	// TODO - Translation
 		'user_list' => 'Seznam uživatelů',
 		'username' => 'Přihlašovací jméno',
 		'users' => 'Uživatelé',

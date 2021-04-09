@@ -28,14 +28,13 @@ class FreshRSS_category_Controller extends Minz_ActionController {
 	 */
 	public function createAction() {
 		$catDAO = FreshRSS_Factory::createCategoryDao();
-		$url_redirect = array('c' => 'subscription', 'a' => 'index');
+		$url_redirect = array('c' => 'subscription', 'a' => 'add');
 
 		$limits = FreshRSS_Context::$system_conf->limits;
 		$this->view->categories = $catDAO->listCategories(false);
 
 		if (count($this->view->categories) >= $limits['max_categories']) {
-			Minz_Request::bad(_t('feedback.sub.category.over_max', $limits['max_categories']),
-			                  $url_redirect);
+			Minz_Request::bad(_t('feedback.sub.category.over_max', $limits['max_categories']), $url_redirect);
 		}
 
 		if (Minz_Request::isPost()) {
@@ -58,6 +57,7 @@ class FreshRSS_category_Controller extends Minz_ActionController {
 			);
 
 			if ($catDAO->addCategory($values)) {
+				$url_redirect['a'] = 'index';
 				Minz_Request::good(_t('feedback.sub.category.created', $cat->name()), $url_redirect);
 			} else {
 				Minz_Request::bad(_t('feedback.sub.category.error'), $url_redirect);

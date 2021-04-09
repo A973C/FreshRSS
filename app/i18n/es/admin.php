@@ -67,12 +67,8 @@ return array(
 			'ok' => 'Dispones de la extensión JSON.',
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'No se ha podido localizar el entorno Minz.',
-			'ok' => 'Dispones del entorno Minz.',
+			'nok' => 'Cannot find the recommended mbstring library for Unicode.',	// TODO - Translation
+			'ok' => 'You have the recommended mbstring library for Unicode.',	// TODO - Translation
 		),
 		'pcre' => array(
 			'nok' => 'No se ha podido localizar la librería para las expresiones regulares (php-pcre).',
@@ -106,23 +102,23 @@ return array(
 		),
 	),
 	'extensions' => array(
-		'author' => 'Author',	//TODO - Translation
-		'community' => 'Available community extensions',	//TODO - Translation
-		'description' => 'Description',	//TODO - Translation
+		'author' => 'Author',	// TODO - Translation
+		'community' => 'Available community extensions',	// TODO - Translation
+		'description' => 'Description',	// TODO - Translation
 		'disabled' => 'Desactivado',
 		'empty_list' => 'No hay extensiones instaladas',
 		'enabled' => 'Activado',
-		'latest' => 'Installed',	//TODO - Translation
-		'name' => 'Name',	//TODO - Translation
+		'latest' => 'Installed',	// TODO - Translation
+		'name' => 'Name',	// TODO - Translation
 		'no_configure_view' => 'Esta extensión no puede ser configurada.',
 		'system' => array(
 			'_' => 'Sistema de extensiones',
 			'no_rights' => 'Sistema de extensiones (careces de los permisos necesarios)',
 		),
 		'title' => 'Extensiones',
-		'update' => 'Update available',	//TODO - Translation
+		'update' => 'Update available',	// TODO - Translation
 		'user' => 'Extensiones de usuario',
-		'version' => 'Version',	//TODO - Translation
+		'version' => 'Version',	// TODO - Translation
 	),
 	'stats' => array(
 		'_' => 'Estadísticas',
@@ -151,7 +147,7 @@ return array(
 		'repartition' => 'Reprto de artículos',
 		'status_favorites' => 'Favoritos',
 		'status_read' => 'Leídos',
-		'status_total' => 'Total',
+		'status_total' => 'Total',	// TODO - Translation
 		'status_unread' => 'Pendientes',
 		'title' => 'Estadísticas',
 		'top_feed' => 'Las 10 fuentes más activas',
@@ -159,13 +155,14 @@ return array(
 	'system' => array(
 		'_' => 'Configuración del sistema',
 		'auto-update-url' => 'URL de auto-actualización',
+		'cookie-duration' => array(
+			'help' => 'in seconds',	// TODO - Translation
+			'number' => 'Duration to keep logged in',	// TODO - Translation
+		),
+		'force_email_validation' => 'Force email address validation',	// TODO - Translation
 		'instance-name' => 'Nombre de la fuente',
 		'max-categories' => 'Límite de categorías por usuario',
 		'max-feeds' => 'Límite de fuentes por usuario',
-		'cookie-duration' => array(
-			'help' => 'in seconds', // @todo translate
-			'number' => 'Duration to keep logged in', // @todo translate
-		),
 		'registration' => array(
 			'help' => '0 significa que no hay límite en la cuenta',
 			'number' => 'Número máximo de cuentas',
@@ -181,17 +178,27 @@ return array(
 		'title' => 'Actualizar sistema',
 	),
 	'user' => array(
-		'articles_and_size' => '%s articles (%s)',
+		'admin' => 'Administrator',	// TODO - Translation
+		'article_count' => 'Articles',	// TODO - Translation
+		'articles_and_size' => '%s articles (%s)',	// TODO - Translation
+		'back_to_manage' => '← Return to user list',	// TODO - Translation
 		'create' => 'Crear nuevo usuario',
-		'delete_users' => 'Delete user',	//TODO - Translation
+		'database_size' => 'Database size',	// TODO - Translation
+		'delete_users' => 'Delete user',	// TODO - Translation
+		'email' => 'Email address',	// TODO - Translation
+		'enabled' => 'Enabled',	// TODO - Translation
+		'feed_count' => 'Feeds',	// TODO - Translation
+		'is_admin' => 'Is admin',	// TODO - Translation
 		'language' => 'Idioma',
+		'last_user_activity' => 'Last user activity',	// TODO - Translation
+		'list' => 'User list',	// TODO - Translation
 		'number' => 'Hay %d cuenta creada',
 		'numbers' => 'Hay %d cuentas creadas',
 		'password_form' => 'Contraseña<br /><small>(para el método de identificación por formulario web)</small>',
 		'password_format' => 'Mínimo de 7 caracteres',
-		'selected' => 'Selected user',	//TODO - Translation
+		'selected' => 'Selected user',	// TODO - Translation
 		'title' => 'Administrar usuarios',
-		'update_users' => 'Update user',	//TODO - Translation
+		'update_users' => 'Update user',	// TODO - Translation
 		'user_list' => 'Lista de usuarios',
 		'username' => 'Nombre de usuario',
 		'users' => 'Usuarios',

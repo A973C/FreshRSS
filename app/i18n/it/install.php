@@ -17,13 +17,13 @@ return array(
 		'type' => 'Metodo di autenticazione',
 	),
 	'bdd' => array(
-		'_' => 'Database',
+		'_' => 'Database',	// TODO - Translation
 		'conf' => array(
 			'_' => 'Configurazione database',
 			'ko' => 'Verifica le informazioni del database.',
 			'ok' => 'Le configurazioni del database sono state salvate.',
 		),
-		'host' => 'Host',
+		'host' => 'Host',	// TODO - Translation
 		'password' => 'Password del database',
 		'prefix' => 'Prefisso tabella',
 		'type' => 'Tipo di database',
@@ -33,7 +33,7 @@ return array(
 		'_' => 'Controlli',
 		'already_installed' => 'FreshRSS risulta già installato!',
 		'cache' => array(
-			'nok' => 'Verifica i permessi sulla cartella <em>./data/cache</em>. Il server HTTP deve avere i permessi per scriverci dentro',
+			'nok' => 'Verifica i permessi sulla cartella <em>%s</em>. Il server HTTP deve avere i permessi per scriverci dentro.',
 			'ok' => 'I permessi sulla cartella della cache sono corretti.',
 		),
 		'ctype' => array(
@@ -45,7 +45,7 @@ return array(
 			'ok' => 'Estensione cURL presente.',
 		),
 		'data' => array(
-			'nok' => 'Verifica i permessi sulla cartella <em>./data</em>. Il server HTTP deve avere i permessi per scriverci dentro',
+			'nok' => 'Verifica i permessi sulla cartella <em>%s</em>. Il server HTTP deve avere i permessi per scriverci dentro.',
 			'ok' => 'I permessi sulla cartella data sono corretti.',
 		),
 		'dom' => array(
@@ -53,28 +53,20 @@ return array(
 			'ok' => 'Libreria richiesta per leggere DOM presente.',
 		),
 		'favicons' => array(
-			'nok' => 'Verifica i permessi sulla cartella <em>./data/favicons</em>. Il server HTTP deve avere i permessi per scriverci dentro',
+			'nok' => 'Verifica i permessi sulla cartella <em>%s</em>. Il server HTTP deve avere i permessi per scriverci dentro.',
 			'ok' => 'I permessi sulla cartella favicons sono corretti.',
 		),
 		'fileinfo' => array(
 			'nok' => 'Manca il supporto per PHP fileinfo (pacchetto fileinfo).',
 			'ok' => 'Estensione fileinfo presente.',
 		),
-		'http_referer' => array(
-			'nok' => 'Per favore verifica che non stai alterando il tuo HTTP REFERER.',
-			'ok' => 'Il tuo HTTP REFERER riconosciuto corrisponde al tuo server.',
-		),
 		'json' => array(
 			'nok' => 'You lack a recommended library to parse JSON.',
-			'ok' => 'You have a recommended library to parse JSON.',
+			'ok' => 'You have the recommended library to parse JSON.',	// TODO - Translation
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'Manca il framework Minz.',
-			'ok' => 'Framework Minz presente.',
+			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	// TODO - Translation
+			'ok' => 'You have the recommended library mbstring for Unicode.',	// TODO - Translation
 		),
 		'pcre' => array(
 			'nok' => 'Manca una libreria richiesta per le regular expressions (php-pcre).',
@@ -88,13 +80,18 @@ return array(
 			'nok' => 'Versione di PHP %s FreshRSS richiede almeno la versione %s.',
 			'ok' => 'Versione di PHP %s, compatibile con FreshRSS.',
 		),
+		'tmp' => array(
+			'nok' => 'Verifica i permessi sulla cartella <em>%s</em>. Il server HTTP deve avere i permessi per scriverci dentro.',
+			'ok' => 'Permissions on the temp directory are good.',	// TODO - Translation
+		),
+		'unknown_process_username' => 'unknown',	// TODO - Translation
 		'users' => array(
-			'nok' => 'Verifica i permessi sulla cartella <em>./data/users</em>. Il server HTTP deve avere i permessi per scriverci dentro',
+			'nok' => 'Verifica i permessi sulla cartella <em>%s</em>. Il server HTTP deve avere i permessi per scriverci dentro.',
 			'ok' => 'I permessi sulla cartella users sono corretti.',
 		),
 		'xml' => array(
 			'nok' => 'You lack the required library to parse XML.',
-			'ok' => 'You have the required library to parse XML.',
+			'ok' => 'You have the required library to parse XML.',	// TODO - Translation
 		),
 	),
 	'conf' => array(
@@ -114,10 +111,13 @@ return array(
 		'choose' => 'Seleziona la lingua per FreshRSS',
 		'defined' => 'Lingua impostata.',
 	),
-	'not_deleted' => 'Qualcosa non ha funzionato; devi cancellare il file <em>%s</em> manualmente.',
+	'missing_applied_migrations' => 'Something went wrong; you should create an empty file <em>%s</em> manually.',	// TODO - Translation
 	'ok' => 'Processo di installazione terminato con successo.',
+	'session' => array(
+		'nok' => 'The web server seems to be incorrectly configured for cookies required for PHP sessions!',	// TODO - Translation
+	),
 	'step' => 'Passaggio %d',
 	'steps' => 'Passaggi',
-	'title' => 'Installazione · FreshRSS',
 	'this_is_the_end' => 'Fine',
+	'title' => 'Installazione · FreshRSS',
 );

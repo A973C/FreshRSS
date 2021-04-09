@@ -13,11 +13,10 @@
 // ================================================================================================
 // BOOTSTRAP FreshRSS
 require(__DIR__ . '/../../constants.php');
-require(LIB_PATH . '/lib_rss.php');    //Includes class autoloader
-Minz_Configuration::register('system', DATA_PATH . '/config.php', FRESHRSS_PATH . '/config.default.php');
+require(LIB_PATH . '/lib_rss.php');	//Includes class autoloader
+FreshRSS_Context::initSystem();
 
 // check if API is enabled globally
-FreshRSS_Context::$system_conf = Minz_Configuration::get('system');
 if (!FreshRSS_Context::$system_conf->api_enabled) {
 	Minz_Log::warning('Fever API: serviceUnavailable() ' . debugInfo(), API_LOG);
 	header('HTTP/1.1 503 Service Unavailable');
@@ -25,9 +24,7 @@ if (!FreshRSS_Context::$system_conf->api_enabled) {
 	die('Service Unavailable!');
 }
 
-ini_set('session.use_cookies', '0');
-register_shutdown_function('session_destroy');
-Minz_Session::init('FreshRSS');
+Minz_Session::init('FreshRSS', true);
 // ================================================================================================
 
 // <Debug>
@@ -95,7 +92,7 @@ class FeverDAO extends Minz_ModelPdo
 		$sql = 'SELECT id, guid, title, author, '
 			. ($entryDAO->isCompressed() ? 'UNCOMPRESS(content_bin) AS content' : 'content')
 			. ', link, date, is_read, is_favorite, id_feed '
-			. 'FROM `' . $this->prefix . 'entry` WHERE';
+			. 'FROM `_entry` WHERE';
 
 		if (!empty($entry_ids)) {
 			$bindEntryIds = $this->bindParamArray('id', $entry_ids, $values);
@@ -120,7 +117,7 @@ class FeverDAO extends Minz_ModelPdo
 		$sql .= $order;
 		$sql .= ' LIMIT 50';
 
-		$stm = $this->bd->prepare($sql);
+		$stm = $this->pdo->prepare($sql);
 		$stm->execute($values);
 		$result = $stm->fetchAll(PDO::FETCH_ASSOC);
 
@@ -161,13 +158,14 @@ class FeverAPI
 			$username = @file_get_contents(DATA_PATH . '/fever/.key-' . sha1(FreshRSS_Context::$system_conf->salt) . '-' . $feverKey . '.txt', false);
 			if ($username != false) {
 				$username = trim($username);
-				Minz_Session::_param('currentUser', $username);
-				$user_conf = get_user_configuration($username);
-				if ($user_conf != null && $feverKey === $user_conf->feverKey) {
-					FreshRSS_Context::$user_conf = $user_conf;
+				FreshRSS_Context::initUser($username);
+				if (FreshRSS_Context::$user_conf != null && $feverKey === FreshRSS_Context::$user_conf->feverKey && FreshRSS_Context::$user_conf->enabled) {
+					Minz_Translate::init(FreshRSS_Context::$user_conf->language);
 					$this->entryDAO = FreshRSS_Factory::createEntryDao();
 					$this->feedDAO = FreshRSS_Factory::createFeedDao();
 					return true;
+				} else {
+					Minz_Translate::init();
 				}
 				Minz_Log::error('Fever API: Reset API password for user: ' . $username, API_LOG);
 				Minz_Log::error('Fever API: Please reset your API password!');
@@ -285,7 +283,7 @@ class FeverAPI
 		$arr = array('api_version' => self::API_LEVEL, 'auth' => $status);
 
 		if ($status === self::STATUS_OK) {
-			$arr['last_refreshed_on_time'] = (string) $this->lastRefreshedOnTime();
+			$arr['last_refreshed_on_time'] = $this->lastRefreshedOnTime();
 			$arr = array_merge($arr, $reply);
 		}
 
@@ -508,7 +506,7 @@ class FeverAPI
 			if (!ctype_digit($max_id)) {
 				$max_id = null;
 			}
-		} else if (isset($_REQUEST['with_ids'])) {
+		} elseif (isset($_REQUEST['with_ids'])) {
 			$entry_ids = explode(',', $_REQUEST['with_ids']);
 		} else {
 			// use the since_id argument to request the next $item_limit items
@@ -533,7 +531,7 @@ class FeverAPI
 				continue;
 			}
 			$items[] = array(
-				'id' => $entry->id(),
+				'id' => '' . $entry->id(),
 				'feed_id' => $entry->feed(false),
 				'title' => escapeToUnicodeAlternative($entry->title(), false),
 				'author' => escapeToUnicodeAlternative(trim($entry->authors(true), '; '), false),

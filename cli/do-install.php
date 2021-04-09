@@ -1,9 +1,9 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 require(__DIR__ . '/_cli.php');
 
-if (!file_exists(DATA_PATH . '/do-install.txt')) {
-	fail('FreshRSS looks to be already installed! Please use `./cli/reconfigure.php` instead.');
+if (file_exists(DATA_PATH . '/applied_migrations.txt')) {
+	fail('FreshRSS seems to be already installed!' . "\n" . 'Please use `./cli/reconfigure.php` instead.', EXIT_CODE_ALREADY_EXISTS);
 }
 
 $params = array(
@@ -53,7 +53,7 @@ foreach ($params as $param) {
 	}
 }
 
-if ((!empty($config['base_url'])) && server_is_public($config['base_url'])) {
+if ((!empty($config['base_url'])) && Minz_Request::serverIsPublic($config['base_url'])) {
 	$config['pubsubhubbub_enabled'] = true;
 }
 
@@ -82,19 +82,38 @@ if (file_put_contents(join_path(DATA_PATH, 'config.php'),
 	fail('FreshRSS could not write configuration file!: ' . join_path(DATA_PATH, 'config.php'));
 }
 
-$config['db']['default_user'] = $config['default_user'];
-if (!checkDb($config['db'])) {
-	@unlink(join_path(DATA_PATH, 'config.php'));
-	fail('FreshRSS database error: ' . (empty($config['db']['error']) ? 'Unknown error' : $config['db']['error']));
+if (function_exists('opcache_reset')) {
+	opcache_reset();
 }
 
-echo '• Remember to create the default user: ', $config['default_user'] , "\n",
+FreshRSS_Context::initSystem(true);
+
+Minz_Session::_param('currentUser', '_');	//Default user
+
+$ok = false;
+try {
+	$error = initDb();
+	if ($error != '') {
+		$_SESSION['bd_error'] = $error;
+	} else {
+		$ok = true;
+	}
+} catch (Exception $ex) {
+	$_SESSION['bd_error'] = $ex->getMessage();
+}
+
+if (!$ok) {
+	@unlink(join_path(DATA_PATH, 'config.php'));
+	fail('FreshRSS database error: ' . (empty($_SESSION['bd_error']) ? 'Unknown error' : $_SESSION['bd_error']));
+}
+
+echo 'ℹ️ Remember to create the default user: ', $config['default_user'],
 	"\t", './cli/create-user.php --user ', $config['default_user'], " --password 'password' --more-options\n";
 
 accessRights();
 
-if (!deleteInstall()) {
-	fail('FreshRSS access right problem while deleting install file!');
+if (!setupMigrations()) {
+	fail('FreshRSS access right problem while creating migrations version file!');
 }
 
 done();

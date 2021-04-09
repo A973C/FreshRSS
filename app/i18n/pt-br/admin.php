@@ -2,10 +2,10 @@
 
 return array(
 	'auth' => array(
-		'allow_anonymous' => 'Permitir a leitura anónima dos artidos pelo usuário padrão (%s)',
+		'allow_anonymous' => 'Permitir a leitura anónima dos artigos pelo usuário padrão (%s)',
 		'allow_anonymous_refresh' => 'Permitir atualização anónima dos artigos',
 		'api_enabled' => 'Permitir acesso à <abbr>API</abbr> <small>(Necessáiro para aplicativos móveis)</small>',
-		'form' => 'Formulário Web(traditional, Necessita de JavaScript)',
+		'form' => 'Formulário Web(tradicional, Necessita de JavaScript)',
 		'http' => 'HTTP (Para usuários avançados com HTTPS)',
 		'none' => 'Nenhum (Perigoso)',
 		'title' => 'Autenticação',
@@ -67,12 +67,8 @@ return array(
 			'ok' => 'Você tem a extensão JSON.',
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'Não foi possível encontrar o framework Minz.',
-			'ok' => 'Você tem o framework Minz.',
+			'nok' => 'Não foi possível encontrar a biblioteca recomendada para Unicode (mbstring).',
+			'ok' => 'Você tem a biblioteca recomendada para Unicode (mbstring).',
 		),
 		'pcre' => array(
 			'nok' => 'Não foi possível encontrar uma biblioteca necessário para expressões regulares (php-pcre).',
@@ -106,23 +102,23 @@ return array(
 		),
 	),
 	'extensions' => array(
-		'author' => 'Author',	//TODO - Translation
-		'community' => 'Available community extensions',	//TODO - Translation
-		'description' => 'Description',	//TODO - Translation
+		'author' => 'Autor',
+		'community' => 'Extensões da comunidade disponíveis',
+		'description' => 'Descrição',
 		'disabled' => 'Desabilitado',
 		'empty_list' => 'Não há extensões instaladas',
 		'enabled' => 'Habilitada',
-		'latest' => 'Installed',	//TODO - Translation
-		'name' => 'Name',	//TODO - Translation
+		'latest' => 'Instalado',
+		'name' => 'Nome',
 		'no_configure_view' => 'Esta extensão não pode ser configurada.',
 		'system' => array(
 			'_' => 'Extensões do sistema',
 			'no_rights' => 'Extensões do sistema (Você não tem direitos para isto)',
 		),
 		'title' => 'Extensões',
-		'update' => 'Update available',	//TODO - Translation
+		'update' => 'Atualização disponível',
 		'user' => 'Extensões do usuário',
-		'version' => 'Version',	//TODO - Translation
+		'version' => 'Versão',
 	),
 	'stats' => array(
 		'_' => 'Estatísticas',
@@ -159,13 +155,14 @@ return array(
 	'system' => array(
 		'_' => 'Configuração do sistema',
 		'auto-update-url' => 'URL do servidor para atualização automática',
+		'cookie-duration' => array(
+			'help' => 'em segundos',
+			'number' => 'Manter seção ativa durante',
+		),
+		'force_email_validation' => 'Força verificação do endereço de email',
 		'instance-name' => 'Nome da instância',
 		'max-categories' => 'Limite de categorias por usuário',
 		'max-feeds' => 'Limite de Feeds por usuário',
-		'cookie-duration' => array(
-			'help' => 'in seconds', // @todo translate
-			'number' => 'Duration to keep logged in', // @todo translate
-		),
 		'registration' => array(
 			'help' => '0 significa que não há limite para a conta',
 			'number' => 'Máximo número de contas',
@@ -181,17 +178,27 @@ return array(
 		'title' => 'Sistema de atualização',
 	),
 	'user' => array(
+		'admin' => 'Administrador',
+		'article_count' => 'Artigos',
 		'articles_and_size' => '%s artigos (%s)',
+		'back_to_manage' => '← Voltar para à lista de usuários',
 		'create' => 'Criar novo usuário',
-		'delete_users' => 'Delete user',	//TODO - Translation
+		'database_size' => 'Tamanho do banco de dados',
+		'delete_users' => 'Deletar usuário',
+		'email' => 'Endereço de email',
+		'enabled' => 'Enabled',	// TODO - Translation
+		'feed_count' => 'Feeds',
+		'is_admin' => 'É administrador',
 		'language' => 'Idioma',
+		'last_user_activity' => 'Last user activity',	// TODO - Translation
+		'list' => 'Lista de usuários',
 		'number' => 'Há %d conta criada',
 		'numbers' => 'Há %d contas criadas',
 		'password_form' => 'Senha<br /><small>(para o login pelo método do formulário)</small>',
 		'password_format' => 'Ao menos 7 caracteres',
-		'selected' => 'Selected user',	//TODO - Translation
+		'selected' => 'Usuário selecionado',
 		'title' => 'Gerenciar usuários',
-		'update_users' => 'Update user',	//TODO - Translation
+		'update_users' => 'Atualizar usuário',
 		'user_list' => 'Lista de usuários',
 		'username' => 'Usuário',
 		'users' => 'Usuários',

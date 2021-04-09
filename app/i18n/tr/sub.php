@@ -1,21 +1,24 @@
 <?php
 
 return array(
+	'add' => 'Feed and category creation has been moved <a href=\'%s\'>here</a>. It is also accessible from the menu on the left and from the ✚ icon available on the main page.',	// TODO - Translation
 	'api' => array(
-		'documentation' => 'Copy the following URL to use it within an external tool.',	//TODO - Translation
-		'title' => 'API',	//TODO - Translation
+		'documentation' => 'Copy the following URL to use it within an external tool.',	// TODO - Translation
+		'title' => 'API',	// TODO - Translation
 	),
 	'bookmarklet' => array(
-		'documentation' => 'Drag this button to your bookmarks toolbar or right-click it and choose "Bookmark This Link". Then click "Subscribe" button in any page you want to subscribe to.',	//TODO - Translation
-		'label' => 'Subscribe',	//TODO - Translation
-		'title' => 'Bookmarklet',	//TODO - Translation
+		'documentation' => 'Drag this button to your bookmarks toolbar or right-click it and choose "Bookmark This Link". Then click the "Subscribe" button in any page you want to subscribe to.',	// TODO - Translation
+		'label' => 'Subscribe',	// TODO - Translation
+		'title' => 'Bookmarklet',	// TODO - Translation
 	),
 	'category' => array(
 		'_' => 'Kategori',
 		'add' => 'Kategori ekle',
+		'archiving' => 'Arşiv',
 		'empty' => 'Boş kategori',
 		'information' => 'Bilgi',
-		'new' => 'Yeni kategori',
+		'position' => 'Display position',	// TODO - Translation
+		'position_help' => 'To control category sort order',	// TODO - Translation
 		'title' => 'Başlık',
 	),
 	'feed' => array(
@@ -29,56 +32,80 @@ return array(
 			'password' => 'HTTP şifre',
 			'username' => 'HTTP kullanıcı adı',
 		),
-		'clear_cache' => 'Always clear cache',	//TODO - Translation
+		'clear_cache' => 'Always clear cache',	// TODO - Translation
+		'content_action' => array(
+			'_' => 'Content action when fetching the article content',	// TODO - Translation
+			'append' => 'Add after existing content',	// TODO - Translation
+			'prepend' => 'Add before existing content',	// TODO - Translation
+			'replace' => 'Replace existing content',	// TODO - Translation
+		),
+		'css_cookie' => 'Use Cookies when fetching the article content',	// TODO - Translation
+		'css_cookie_help' => 'Example: <kbd>foo=bar; gdpr_consent=true; cookie=value</kbd>',	// TODO - Translation
 		'css_help' => 'Dikkat, daha çok zaman gerekir!',
 		'css_path' => 'Makaleleri kendi CSS görünümü ile göster',
 		'description' => 'Tanım',
 		'empty' => 'Bu akış boş. Lütfen akışın aktif olduğuna emin olun.',
 		'error' => 'Bu akışda bir hatayla karşılaşıldı. Lütfen akışın sürekli ulaşılabilir olduğuna emin olun.',
 		'filteractions' => array(
-			'_' => 'Filter actions',	//TODO - Translation
-			'help' => 'Write one search filter per line.',	//TODO - Translation
+			'_' => 'Filter actions',	// TODO - Translation
+			'help' => 'Write one search filter per line.',	// TODO - Translation
 		),
 		'information' => 'Bilgi',
-		'keep_history' => 'En az tutulacak makale sayısı',
+		'keep_min' => 'En az tutulacak makale sayısı',
+		'maintenance' => array(
+			'clear_cache' => 'Clear cache',	// TODO - Translation
+			'clear_cache_help' => 'Clear the cache for this feed.',	// TODO - Translation
+			'reload_articles' => 'Reload articles',	// TODO - Translation
+			'reload_articles_help' => 'Reload articles and fetch complete content if a selector is defined.',	// TODO - Translation
+			'title' => 'Maintenance',	// TODO - Translation
+		),
 		'moved_category_deleted' => 'Bir kategoriyi silerseniz, içerisindeki akışlar <em>%s</em> içerisine yerleşir.',
-		'mute' => 'mute',	//TODO - Translation
+		'mute' => 'mute',	// TODO - Translation
 		'no_selected' => 'Hiçbir akış seçilmedi.',
 		'number_entries' => '%d makale',
 		'priority' => array(
-			'_' => 'Visibility',	//TODO - Translation
-			'archived' => 'Do not show (archived)',	//TODO - Translation
+			'_' => 'Visibility',	// TODO - Translation
+			'archived' => 'Do not show (archived)',	// TODO - Translation
 			'main_stream' => 'Ana akışda göster',
-			'normal' => 'Show in its category',	//TODO - Translation
+			'normal' => 'Show in its category',	// TODO - Translation
 		),
-		'websub' => 'WebSub ile anlık bildirim',
+		'proxy' => 'Set a proxy for fetching this feed',	// TODO - Translation
+		'proxy_help' => 'Select a protocol (e.g: SOCKS5) and enter the proxy address (e.g: <kbd>127.0.0.1:1080</kbd>)',	// TODO - Translation
+		'selector_preview' => array(
+			'show_raw' => 'Show source code',	// TODO - Translation
+			'show_rendered' => 'Show content',	// TODO - Translation
+		),
 		'show' => array(
-			'all' => 'Show all feeds',	//TODO - Translation
-			'error' => 'Show only feeds with error',	//TODO - Translation
+			'all' => 'Show all feeds',	// TODO - Translation
+			'error' => 'Show only feeds with errors',	// TODO - Translation
 		),
 		'showing' => array(
-			'error' => 'Showing only feeds with error',	//TODO - Translation
+			'error' => 'Showing only feeds with errors',	// TODO - Translation
 		),
-		'ssl_verify' => 'Verify SSL security',	//TODO - Translation
+		'ssl_verify' => 'Verify SSL security',	// TODO - Translation
 		'stats' => 'İstatistikler',
 		'think_to_add' => 'Akış ekleyebilirsiniz.',
-		'timeout' => 'Timeout in seconds',	//TODO - Translation
+		'timeout' => 'Timeout in seconds',	// TODO - Translation
 		'title' => 'Başlık',
 		'title_add' => 'RSS akışı ekle',
 		'ttl' => 'Şu kadar süreden fazla otomatik yenileme yapma',
 		'url' => 'Akış URL',
+		'useragent' => 'Set the user agent for fetching this feed',	// TODO - Translation
+		'useragent_help' => 'Example: <kbd>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0)</kbd>',	// TODO - Translation
 		'validator' => 'Akış geçerliliğini kontrol edin',
 		'website' => 'Site URL',
+		'websub' => 'WebSub ile anlık bildirim',
 	),
 	'firefox' => array(
-		'documentation' => 'Follow the steps described <a href="https://developer.mozilla.org/en-US/Firefox/Releases/2/Adding_feed_readers_to_Firefox#Adding_a_new_feed_reader_manually">here</a> to add FreshRSS to Firefox feed reader list.',	//TODO - Translation
-		'title' => 'Firefox feed reader',	//TODO - Translation
+		'documentation' => 'Follow the steps described <a href="https://developer.mozilla.org/en-US/Firefox/Releases/2/Adding_feed_readers_to_Firefox#Adding_a_new_feed_reader_manually">here</a> to add FreshRSS to Firefox feed reader list.',	// TODO - Translation
+		'obsolete_63' => 'From version 63 and onwards, Firefox has removed the ability to add your own subscription services that are not standalone programs.',	// TODO - Translation
+		'title' => 'Firefox feed reader',	// TODO - Translation
 	),
 	'import_export' => array(
 		'export' => 'Dışa aktar',
+		'export_labelled' => 'Export your labelled articles',	// TODO - Translation
 		'export_opml' => 'Akış listesini dışarı aktar (OPML)',
 		'export_starred' => 'Favorileri dışarı aktar',
-		'export_labelled' => 'Export your labelled articles',	//TODO
 		'feed_list' => '%s makalenin listesi',
 		'file_to_import' => 'Dosyadan içe aktar<br />(OPML, JSON or ZIP)',
 		'file_to_import_no_zip' => 'Dosyadan içe aktar<br />(OPML or JSON)',
@@ -87,14 +114,28 @@ return array(
 		'title' => 'İçe / dışa aktar',
 	),
 	'menu' => array(
+		'add' => 'Add a feed or category',	// TODO - Translation
+		'add_feed' => 'Add a feed',	// TODO - Translation
 		'bookmark' => 'Abonelik (FreshRSS yer imleri)',
 		'import_export' => 'İçe / dışa aktar',
+		'label_management' => 'Label management',	// TODO - Translation
 		'subscription_management' => 'Abonelik yönetimi',
-		'subscription_tools' => 'Subscription tools',	//TODO - Translation
+		'subscription_tools' => 'Subscription tools',	// TODO - Translation
+	),
+	'tag' => array(
+		'name' => 'Name',	// TODO - Translation
+		'new_name' => 'New name',	// TODO - Translation
+		'old_name' => 'Old name',	// TODO - Translation
 	),
 	'title' => array(
 		'_' => 'Abonelik yönetimi',
-		'feed_management' => 'RSS  akış yönetimi',
-		'subscription_tools' => 'Subscription tools',	//TODO - Translation
+		'add' => 'Add a feed or category',	// TODO - Translation
+		'add_category' => 'Add a category',	// TODO - Translation
+		'add_feed' => 'Add a feed',	// TODO - Translation
+		'add_label' => 'Add a label',	// TODO - Translation
+		'delete_label' => 'Delete a label',	// TODO - Translation
+		'feed_management' => 'RSS akış yönetimi',
+		'rename_label' => 'Rename a label',	// TODO - Translation
+		'subscription_tools' => 'Subscription tools',	// TODO - Translation
 	),
 );

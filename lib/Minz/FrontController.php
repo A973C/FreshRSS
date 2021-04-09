@@ -31,9 +31,6 @@ class Minz_FrontController {
 	 */
 	public function __construct () {
 		try {
-			Minz_Configuration::register('system',
-			                             DATA_PATH . '/config.php',
-			                             FRESHRSS_PATH . '/config.default.php');
 			$this->setReporting();
 
 			Minz_Request::init();
@@ -46,7 +43,7 @@ class Minz_FrontController {
 			Minz_Request::forward ($url);
 		} catch (Minz_Exception $e) {
 			Minz_Log::error($e->getMessage());
-			$this->killApp ($e->getMessage ());
+			$this->killApp ($e->getMessage());
 		}
 
 		$this->dispatcher = Minz_Dispatcher::getInstance();
@@ -57,21 +54,21 @@ class Minz_FrontController {
 	 * @return tableau représentant l'url
 	 */
 	private function buildUrl() {
-		$url = array ();
+		$url = array();
 
-		$url['c'] = Minz_Request::fetchGET (
+		$url['c'] = Minz_Request::fetchGET(
 			'c',
-			Minz_Request::defaultControllerName ()
+			Minz_Request::defaultControllerName()
 		);
-		$url['a'] = Minz_Request::fetchGET (
+		$url['a'] = Minz_Request::fetchGET(
 			'a',
-			Minz_Request::defaultActionName ()
+			Minz_Request::defaultActionName()
 		);
-		$url['params'] = Minz_Request::fetchGET ();
+		$url['params'] = Minz_Request::fetchGET();
 
 		// post-traitement
-		unset ($url['params']['c']);
-		unset ($url['params']['a']);
+		unset($url['params']['c']);
+		unset($url['params']['a']);
 
 		return $url;
 	}
@@ -79,7 +76,7 @@ class Minz_FrontController {
 	/**
 	 * Démarre l'application (lance le dispatcher et renvoie la réponse)
 	 */
-	public function run () {
+	public function run() {
 		try {
 			$this->dispatcher->run();
 		} catch (Minz_Exception $e) {
@@ -95,11 +92,11 @@ class Minz_FrontController {
 					$e instanceof Minz_ActionException) {
 				Minz_Error::error (
 					404,
-					array ('error' => array ($e->getMessage ())),
+					array('error' => array ($e->getMessage ())),
 					true
 				);
 			} else {
-				$this->killApp ();
+				$this->killApp();
 			}
 		}
 	}
@@ -108,28 +105,34 @@ class Minz_FrontController {
 	* Permet d'arrêter le programme en urgence
 	*/
 	private function killApp ($txt = '') {
-		if ($txt == '') {
-			$txt = 'See logs files';
+		if (function_exists('errorMessage')) {
+			//If the application has defined a custom error message function
+			exit(errorMessage('Application problem', $txt));
 		}
-		exit ('### Application problem ###<br />'."\n".$txt);
+		exit('### Application problem ###<br />' . "\n" . $txt);
 	}
 
 	private function setReporting() {
-		$conf = Minz_Configuration::get('system');
-		switch($conf->environment) {
-		case 'production':
-			error_reporting(E_ALL);
-			ini_set('display_errors', 'Off');
-			ini_set('log_errors', 'On');
-			break;
-		case 'development':
-			error_reporting(E_ALL);
-			ini_set('display_errors', 'On');
-			ini_set('log_errors', 'On');
-			break;
-		case 'silent':
-			error_reporting(0);
-			break;
+		$envType = getenv('FRESHRSS_ENV');
+		if ($envType == '') {
+			$conf = Minz_Configuration::get('system');
+			$envType = $conf->environment;
+		}
+		switch ($envType) {
+			case 'development':
+				error_reporting(E_ALL);
+				ini_set('display_errors', 'On');
+				ini_set('log_errors', 'On');
+				break;
+			case 'silent':
+				error_reporting(0);
+				break;
+			case 'production':
+			default:
+				error_reporting(E_ALL);
+				ini_set('display_errors', 'Off');
+				ini_set('log_errors', 'On');
+				break;
 		}
 	}
 }

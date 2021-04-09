@@ -1,12 +1,18 @@
 <?php
-/* Dutch translation by Wanabo. http://www.nieuwskop.be */
+
 return array(
-	'admin' => array(
-		'optimization_complete' => 'Optimalisatie compleet',
-	),
 	'access' => array(
 		'denied' => 'U hebt geen rechten om deze pagina te bekijken.',
 		'not_found' => 'Deze pagina bestaat niet',
+	),
+	'admin' => array(
+		'optimization_complete' => 'Optimalisatie compleet',
+	),
+	'api' => array(
+		'password' => array(
+			'failed' => 'Het wachtwoord kan niet worden gewijzigd',
+			'updated' => 'Het wachtwoord is gewijzigd',
+		),
 	),
 	'auth' => array(
 		'form' => array(
@@ -30,6 +36,7 @@ return array(
 	),
 	'extensions' => array(
 		'already_enabled' => '%s is al ingeschakeld',
+		'cannot_remove' => '%s kan niet worden verwijderd',
 		'disable' => array(
 			'ko' => '%s kan niet worden uitgeschakeld. <a href="%s">Controleer FreshRSS log bestanden</a> voor details.',
 			'ok' => '%s is nu uitgeschakeld',
@@ -41,6 +48,7 @@ return array(
 		'no_access' => 'U hebt geen toegang voor %s',
 		'not_enabled' => '%s is nog niet ingeschakeld',
 		'not_found' => '%s bestaat niet',
+		'removed' => '%s verwijderd',
 	),
 	'import_export' => array(
 		'export_no_zip_extension' => 'ZIP uitbreiding is niet aanwezig op uw server. Exporteer a.u.b. uw bestanden één voor één.',
@@ -75,9 +83,10 @@ return array(
 		),
 		'feed' => array(
 			'actualized' => '<em>%s</em> vernieuwd',
-			'actualizeds' => 'RSS feeds vernieuwd',
+			'actualizeds' => 'RSS-feeds vernieuwd',
 			'added' => 'RSS feed <em>%s</em> toegevoegd',
 			'already_subscribed' => 'Al geabonneerd op <em>%s</em>',
+			'cache_cleared' => '<em>%s</em> cache verwijderd',
 			'deleted' => 'Feed verwijderd',
 			'error' => 'Feed kan niet worden vernieuwd',
 			'internal_problem' => 'De feed kon niet worden toegevoegd. <a href="%s">Controleer de FreshRSS-logbestanden</a> voor details. Toevoegen forceren kan worden geprobeerd door <code>#force_feed</code> aan de URL toe te voegen.',
@@ -86,10 +95,24 @@ return array(
 			'n_entries_deleted' => '%d artikelen zijn verwijderd',
 			'no_refresh' => 'Er is geen feed om te vernieuwen…',
 			'not_added' => '<em>%s</em> kon niet worden toegevoegd',
+			'not_found' => 'Feed niet gevonden',
 			'over_max' => 'Maximum aantal feeds bereikt (%d)',
+			'reloaded' => '<em>%s</em> is herladen',
+			'selector_preview' => array(
+				'http_error' => 'Website-inhoud laden mislukt.',
+				'no_entries' => 'Er zijn geen artikels in deze feed. Er moet ten minste een artikel zijn om een voorbeeld te tonen.',
+				'no_feed' => 'Interne fout (feed kan niet worden gevonden).',
+				'no_result' => 'De selector komt met niets overeen. Als een terugval zal de originele feedtekst worden weergegeven.',
+				'selector_empty' => 'De selector is leeg. Er moet een selector worden gedefinieerd om een voorbeeld te tonen.',
+			),
 			'updated' => 'Feed is vernieuwd',
 		),
 		'purge_completed' => 'Opschonen klaar (%d artikelen verwijderd)',
+	),
+	'tag' => array(
+		'created' => 'Tag "%s" is aangemaakt.',
+		'name_exists' => 'Tagnaam bestaat al.',
+		'renamed' => 'Tag "%s" hernoemd naar "%s".',
 	),
 	'update' => array(
 		'can_apply' => 'FreshRSS word nu vernieud naar <strong>versie %s</strong>.',

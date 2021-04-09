@@ -2,13 +2,21 @@
 
 class FreshRSS_Factory {
 
+	public static function createUserDao($username = null) {
+		return new FreshRSS_UserDAO($username);
+	}
+
 	public static function createCategoryDao($username = null) {
-		return new FreshRSS_CategoryDAO($username);
+		switch (FreshRSS_Context::$system_conf->db['type']) {
+			case 'sqlite':
+				return new FreshRSS_CategoryDAOSQLite($username);
+			default:
+				return new FreshRSS_CategoryDAO($username);
+		}
 	}
 
 	public static function createFeedDao($username = null) {
-		$conf = Minz_Configuration::get('system');
-		switch ($conf->db['type']) {
+		switch (FreshRSS_Context::$system_conf->db['type']) {
 			case 'sqlite':
 				return new FreshRSS_FeedDAOSQLite($username);
 			default:
@@ -17,8 +25,7 @@ class FreshRSS_Factory {
 	}
 
 	public static function createEntryDao($username = null) {
-		$conf = Minz_Configuration::get('system');
-		switch ($conf->db['type']) {
+		switch (FreshRSS_Context::$system_conf->db['type']) {
 			case 'sqlite':
 				return new FreshRSS_EntryDAOSQLite($username);
 			case 'pgsql':
@@ -29,8 +36,7 @@ class FreshRSS_Factory {
 	}
 
 	public static function createTagDao($username = null) {
-		$conf = Minz_Configuration::get('system');
-		switch ($conf->db['type']) {
+		switch (FreshRSS_Context::$system_conf->db['type']) {
 			case 'sqlite':
 				return new FreshRSS_TagDAOSQLite($username);
 			case 'pgsql':
@@ -41,8 +47,7 @@ class FreshRSS_Factory {
 	}
 
 	public static function createStatsDAO($username = null) {
-		$conf = Minz_Configuration::get('system');
-		switch ($conf->db['type']) {
+		switch (FreshRSS_Context::$system_conf->db['type']) {
 			case 'sqlite':
 				return new FreshRSS_StatsDAOSQLite($username);
 			case 'pgsql':
@@ -53,8 +58,7 @@ class FreshRSS_Factory {
 	}
 
 	public static function createDatabaseDAO($username = null) {
-		$conf = Minz_Configuration::get('system');
-		switch ($conf->db['type']) {
+		switch (FreshRSS_Context::$system_conf->db['type']) {
 			case 'sqlite':
 				return new FreshRSS_DatabaseDAOSQLite($username);
 			case 'pgsql':

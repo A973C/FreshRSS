@@ -1,12 +1,18 @@
 <?php
 
 return array(
-	'admin' => array(
-		'optimization_complete' => 'Optimizacion acabada',
-	),
 	'access' => array(
 		'denied' => 'Avètz pas l’autorizacion d’accedir a aquesta pagina',
 		'not_found' => 'La pagina que cercatz existís pas',
+	),
+	'admin' => array(
+		'optimization_complete' => 'Optimizacion acabada',
+	),
+	'api' => array(
+		'password' => array(
+			'failed' => 'Vòstre senhal pòt pas èsser modificat',
+			'updated' => 'Vòstre senhal es estat modificat',
+		),
 	),
 	'auth' => array(
 		'form' => array(
@@ -30,6 +36,7 @@ return array(
 	),
 	'extensions' => array(
 		'already_enabled' => '%s es ja activada',
+		'cannot_remove' => '%s pòt pas èsser suprimida',
 		'disable' => array(
 			'ko' => '%s pòt pas èsser desactivada. <a href="%s">Consultatz los jornals d’audit de FreshRSS logs</a> per mai de detalhs.',
 			'ok' => '%s es ara desactivada',
@@ -41,6 +48,7 @@ return array(
 		'no_access' => 'Avètz pas accès sus %s',
 		'not_enabled' => '%s es pas encara activada',
 		'not_found' => '%s existís pas',
+		'removed' => '%s suprimida',
 	),
 	'import_export' => array(
 		'export_no_zip_extension' => 'L\'extension ZIP es pas presenta sul servidor. Volgatz ensajar d\'exportar los fichièrs un per un.',
@@ -78,18 +86,33 @@ return array(
 			'actualizeds' => 'Los fluxes son estats actualizats',
 			'added' => 'Lo flux RSS <em>%s</em> es ajustat',
 			'already_subscribed' => 'Seguissètz ja <em>%s</em>',
+			'cache_cleared' => '<em>%s</em> cache escafat',
 			'deleted' => 'Lo flux es suprimit',
 			'error' => 'Error en actualizar',
-			'internal_problem' => 'Lo flux pòt pas èsser ajustat. <a href="%s">Consultatz los jornals d’audit de FreshRSS</a> per ne saber mai. Podètz forçar l’apondon  en ajustant <code>#force_feed</code> a l’URL.',
+			'internal_problem' => 'Lo flux pòt pas èsser ajustat. <a href="%s">Consultatz los jornals d’audit de FreshRSS</a> per ne saber mai. Podètz forçar l’apondon en ajustant <code>#force_feed</code> a l’URL.',
 			'invalid_url' => 'L\'URL <em>%s</em> es invalida',
 			'n_actualized' => '%s fluxes son estats actualizats',
 			'n_entries_deleted' => '%d articles son estats suprimits',
 			'no_refresh' => 'I a pas cap de flux d’actualizar…',
 			'not_added' => '<em>%s</em> a pas pogut èsser ajustat',
+			'not_found' => 'Flux introbable',
 			'over_max' => 'Avètz atengut vòstra limita de fluxes (%d)',
+			'reloaded' => '<em>%s</em> es estat recargat',
+			'selector_preview' => array(
+				'http_error' => 'Fracàs del cargament del contengut del site web.',
+				'no_entries' => 'I a pas cap d’entrada dins lo flux. Vos cal almens una entrada per crear un apercebut.',
+				'no_feed' => 'Error inèrna (cap d’entrada a l’entrada).',
+				'no_result' => 'Lo selecctor a pas atrapat res. Coma solucion alternativa lo flux original serà mostrat.',
+				'selector_empty' => 'Lo selecctor es void. Vos cal ne definir un per crear un apercebut.',
+			),
 			'updated' => 'Lo flux es actualizat',
 		),
 		'purge_completed' => 'Purga realizada (%s articles suprimits)',
+	),
+	'tag' => array(
+		'created' => 'L’etiqueta « %s » es estada creada.',
+		'name_exists' => 'Lo nom de l’etiqueta existís ja.',
+		'renamed' => 'L’etiqueta « %s » es estada renomenada en « %s ».',
 	),
 	'update' => array(
 		'can_apply' => 'FreshRSS es per èsser mes a jorn en <strong>version %s</strong>.',

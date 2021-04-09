@@ -7,21 +7,21 @@ return array(
 		'bugs_reports' => 'Senhalament de problèmas',
 		'credits' => 'Crèdits',
 		'credits_content' => 'Unes elements de l’estil venon del <a href="http://twitter.github.io/bootstrap/">projècte Bootstrap</a> encara que FreshRSS utilize pas aqueste framework. Las <a href="https://git.gnome.org/browse/gnome-icon-theme-symbolic">icònas</a> venon del <a href="https://www.gnome.org/">projècte GNOME</a>. La polissa <em>Open Sans</em> utilizada foguèt creada per en <a href="https://fonts.google.com/specimen/Open+Sans">Steve Matteson</a>. FreshRSS es basat sus <a href="https://github.com/marienfressinaud/MINZ">Minz</a>, un framework PHP.',
-		'freshrss_description' => 'FreshRSS es un agregador de fluxes RSS per l’auto-albergar tal coma <a href="http://tontof.net/kriss/feed/">Kriss Feed</a> o <a href="http://projet.idleman.fr/leed/">Leed</a>. Sa tòca es d’èsser leugièr e de bon utilizar de prima abòrd mas tanben d’èsser potent e parametrable.',
-		'github' => '<a href="https://github.com/FreshRSS/FreshRSS/issues">on Github</a>',
+		'freshrss_description' => 'FreshRSS es un agregador de fluxes RSS per l’auto-albergar tal coma <a href="http://tontof.net/kriss/feed/">Kriss Feed</a> o <a href="https://github.com/LeedRSS/Leed">Leed</a>. Sa tòca es d’èsser leugièr e de bon utilizar de prima abòrd mas tanben d’èsser potent e parametrable.',
+		'github' => '<a href="https://github.com/FreshRSS/FreshRSS/issues">sus Github</a>',
 		'license' => 'Licéncia',
 		'project_website' => 'Site del projècte',
 		'title' => 'A prepaus',
-		'website' => 'Site internet',
 		'version' => 'Version',
+		'website' => 'Site internet',
 	),
 	'feed' => array(
 		'add' => 'Podètz ajustar de fluxes.',
 		'empty' => 'I a pas cap de flux de mostrar.',
 		'rss_of' => 'Flux RSS de %s',
-		'title' => 'Vòstres fluxes RSS',
+		'title' => 'Flux màger',
+		'title_fav' => 'Favorits',
 		'title_global' => 'Vista generala',
-		'title_fav' => 'Vòstres favorits',
 	),
 	'log' => array(
 		'_' => 'Jornals d’audit',
@@ -31,9 +31,9 @@ return array(
 	),
 	'menu' => array(
 		'about' => 'A prepaus de FreshRSS',
-		'add_query' => 'Crear un filtre',
 		'before_one_day' => '1 jorn en arrièr',
 		'before_one_week' => '1 setmana en arrièr',
+		'bookmark_query' => 'Marcar aquesta requèsta',
 		'favorites' => 'Favorits (%s)',
 		'global_view' => 'Vista generala',
 		'main_stream' => 'Flux màger',
@@ -59,5 +59,8 @@ return array(
 	'share' => 'Partejar',
 	'tag' => array(
 		'related' => 'Etiquetas ligadas',
+	),
+	'tos' => array(
+		'title' => 'Condicions d’utilizacion',
 	),
 );

@@ -501,9 +501,10 @@ class DOMDocumentWrapper {
 		$metaContentType = $matches[0][0];
 		$markup = substr($markup, 0, $matches[0][1])
 			.substr($markup, $matches[0][1]+strlen($metaContentType));
-		$headStart = stripos($markup, '<head>');
-		$markup = substr($markup, 0, $headStart+6).$metaContentType
-			.substr($markup, $headStart+6);
+		$headStart = stripos($markup, '<head');
+		$headStop = stripos($markup, '>', $headStart);
+		$markup = substr($markup, 0, $headStop+1).$metaContentType
+			.substr($markup, $headStop+1);
 		return $markup;
 	}
 	protected function charsetAppendToHTML($html, $charset, $xhtml = false) {
@@ -1032,7 +1033,22 @@ class CallbackBody extends Callback {
 			$param3 = null) {
 		$params = func_get_args();
 		$params = array_slice($params, 2);
-		$this->callback = create_function($paramList, $code);
+
+		$this->callback = function (&...$args) use ($paramList, $code) {
+			$paramListArray = explode(',', $paramList);
+			for ($i = 0; $i < count($paramListArray); $i++) {
+				$param = trim($paramListArray[$i]);
+				if ($param[0] === '&') {
+					$paramName = ltrim($param, '&$');
+					${$paramName} = &$args[$i];
+				} else {
+					$paramName = ltrim($param, '$');
+					${$paramName} = $args[$i];
+				}
+			}
+			return eval($code);
+		};
+
 		$this->params = $params;
 	}
 }
@@ -1795,6 +1811,14 @@ class phpQueryObject
 		}
 		$this->elements = $stack;
 	}
+
+	/**
+	* used for ordering results in find()
+	*/
+	private function cmpByLineNo($a , $b) {
+		return $a->getLineNo() <= $b->getLineNo() ? -1 : 1;
+	}
+
 	/**
 	 * Enter description here...
 	 *
@@ -1957,6 +1981,7 @@ class phpQueryObject
 				if (! $this->elementsContainsNode($node, $stack))
 					$stack[] = $node;
 		}
+		usort($stack, array('phpQueryObject', 'cmpByLineNo'));
 		$this->elements = $stack;
 		return $this->newInstance();
 	}
@@ -2083,16 +2108,18 @@ class phpQueryObject
 			break;
 			case 'parent':
 				$this->elements = $this->map(
-					create_function('$node', '
+					function ($node) {
 						return $node instanceof DOMELEMENT && $node->childNodes->length
-							? $node : null;')
+							? $node : null;
+					}
 				)->elements;
 			break;
 			case 'empty':
 				$this->elements = $this->map(
-					create_function('$node', '
+					function ($node) {
 						return $node instanceof DOMELEMENT && $node->childNodes->length
-							? null : $node;')
+							? null : $node;
+					}
 				)->elements;
 			break;
 			case 'disabled':
@@ -2105,47 +2132,38 @@ class phpQueryObject
 			break;
 			case 'enabled':
 				$this->elements = $this->map(
-					create_function('$node', '
-						return pq($node)->not(":disabled") ? $node : null;')
+					function ($node) {
+						return pq($node)->not(":disabled") ? $node : null;
+					}
 				)->elements;
 			break;
 			case 'header':
 				$this->elements = $this->map(
-					create_function('$node',
-						'$isHeader = isset($node->tagName) && in_array($node->tagName, array(
+					function ($node) {
+						$isHeader = isset($node->tagName) && in_array($node->tagName, array(
 							"h1", "h2", "h3", "h4", "h5", "h6", "h7"
 						));
 						return $isHeader
 							? $node
-							: null;')
+							: null;
+					}
 				)->elements;
-//				$this->elements = $this->map(
-//					create_function('$node', '$node = pq($node);
-//						return $node->is("h1")
-//							|| $node->is("h2")
-//							|| $node->is("h3")
-//							|| $node->is("h4")
-//							|| $node->is("h5")
-//							|| $node->is("h6")
-//							|| $node->is("h7")
-//							? $node
-//							: null;')
-//				)->elements;
 			break;
 			case 'only-child':
 				$this->elements = $this->map(
-					create_function('$node',
-						'return pq($node)->siblings()->size() == 0 ? $node : null;')
+					function ($node) {
+						return pq($node)->siblings()->size() == 0 ? $node : null;
+					}
 				)->elements;
 			break;
 			case 'first-child':
 				$this->elements = $this->map(
-					create_function('$node', 'return pq($node)->prevAll()->size() == 0 ? $node : null;')
+					function ($node) { return pq($node)->prevAll()->size() == 0 ? $node : null; }
 				)->elements;
 			break;
 			case 'last-child':
 				$this->elements = $this->map(
-					create_function('$node', 'return pq($node)->nextAll()->size() == 0 ? $node : null;')
+					function ($node) { return pq($node)->nextAll()->size() == 0 ? $node : null; }
 				)->elements;
 			break;
 			case 'nth-child':
@@ -2153,32 +2171,33 @@ class phpQueryObject
 				if (! $param)
 					break;
 					// nth-child(n+b) to nth-child(1n+b)
-				if ($param{0} == 'n')
+				if ($param[0] == 'n')
 					$param = '1'.$param;
 				// :nth-child(index/even/odd/equation)
 				if ($param == 'even' || $param == 'odd')
 					$mapped = $this->map(
-						create_function('$node, $param',
-							'$index = pq($node)->prevAll()->size()+1;
+						function ($node, $param) {
+							$index = pq($node)->prevAll()->size()+1;
 							if ($param == "even" && ($index%2) == 0)
 								return $node;
 							else if ($param == "odd" && $index%2 == 1)
 								return $node;
 							else
-								return null;'),
+								return null;
+						},
 						new CallbackParam(), $param
 					);
-				else if (mb_strlen($param) > 1 && $param{1} == 'n')
+				else if (mb_strlen($param) > 1 && $param[1] == 'n')
 					// an+b
 					$mapped = $this->map(
-						create_function('$node, $param',
-							'$prevs = pq($node)->prevAll()->size();
+						function ($node, $param) {
+							$prevs = pq($node)->prevAll()->size();
 							$index = 1+$prevs;
 							$b = mb_strlen($param) > 3
-								? $param{3}
+								? $param[3]
 								: 0;
-							$a = $param{0};
-							if ($b && $param{2} == "-")
+							$a = $param[0];
+							if ($b && $param[2] == "-")
 								$b = -$b;
 							if ($a > 0) {
 								return ($index-$b)%$a == 0
@@ -2205,20 +2224,21 @@ class phpQueryObject
 //								return ($index-$b)%$a == 0
 //									? $node
 //									: null;
-							'),
+						},
 						new CallbackParam(), $param
 					);
 				else
 					// index
 					$mapped = $this->map(
-						create_function('$node, $index',
-							'$prevs = pq($node)->prevAll()->size();
+						function ($node, $index) {
+							$prevs = pq($node)->prevAll()->size();
 							if ($prevs && $prevs == $index-1)
 								return $node;
 							else if (! $prevs && $index == 1)
 								return $node;
 							else
-								return null;'),
+								return null;
+						},
 						new CallbackParam(), $param
 					);
 				$this->elements = $mapped->elements;
@@ -4206,7 +4226,7 @@ class phpQueryObject
 					.($node->getAttribute('id')
 						? '#'.$node->getAttribute('id'):'')
 					.($node->getAttribute('class')
-						? '.'.join('.', split(' ', $node->getAttribute('class'))):'')
+						? '.'.join('.', explode(' ', $node->getAttribute('class'))):'')
 					.($node->getAttribute('name')
 						? '[name="'.$node->getAttribute('name').'"]':'')
 					.($node->getAttribute('value') && strpos($node->getAttribute('value'), '<'.'?php') === false
@@ -4691,11 +4711,6 @@ abstract class phpQuery {
 			while (preg_match($regex, $php, $matches)) {
 				$php = preg_replace_callback(
 					$regex,
-//					create_function('$m, $charset = "'.$charset.'"',
-//						'return $m[1].$m[2]
-//							.htmlspecialchars("<"."?php".$m[4]."?".">", ENT_QUOTES|ENT_NOQUOTES, $charset)
-//							.$m[5].$m[2];'
-//					),
 					array('phpQuery', '_phpToMarkupCallback'),
 					$php
 				);
@@ -4727,9 +4742,6 @@ abstract class phpQuery {
 		/* <php>...</php> to <?php...? > */
 		$content = preg_replace_callback(
 			'@<php>\s*<!--(.*?)-->\s*</php>@s',
-//			create_function('$m',
-//				'return "<'.'?php ".htmlspecialchars_decode($m[1])." ?'.'>";'
-//			),
 			array('phpQuery', '_markupToPHPCallback'),
 			$content
 		);
@@ -4742,15 +4754,15 @@ abstract class phpQuery {
 			while (preg_match($regex, $content))
 				$content = preg_replace_callback(
 					$regex,
-					create_function('$m',
-						'return $m[1].$m[2].$m[3]."<?php "
+					function ($m) {
+						return $m[1].$m[2].$m[3]."<?php "
 							.str_replace(
 								array("%20", "%3E", "%09", "&#10;", "&#9;", "%7B", "%24", "%7D", "%22", "%5B", "%5D"),
-								array(" ", ">", "	", "\n", "	", "{", "$", "}", \'"\', "[", "]"),
+								array(" ", ">", "	", "\n", "	", "{", "$", "}", '"', "[", "]"),
 								htmlspecialchars_decode($m[4])
 							)
-							." ?>".$m[5].$m[2];'
-					),
+							." ?>".$m[5].$m[2];
+					},
 					$content
 				);
 		return $content;

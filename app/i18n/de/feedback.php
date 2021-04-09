@@ -1,12 +1,18 @@
 <?php
 
 return array(
-	'admin' => array(
-		'optimization_complete' => 'Optimierung abgeschlossen',
-	),
 	'access' => array(
 		'denied' => 'Sie haben nicht die Berechtigung, diese Seite aufzurufen',
 		'not_found' => 'Sie suchen nach einer Seite, die nicht existiert',
+	),
+	'admin' => array(
+		'optimization_complete' => 'Optimierung abgeschlossen',
+	),
+	'api' => array(
+		'password' => array(
+			'failed' => 'Ihr Passwort konnte nicht geändert werden',
+			'updated' => 'Ihr Passwort wurde geändert',
+		),
 	),
 	'auth' => array(
 		'form' => array(
@@ -30,6 +36,7 @@ return array(
 	),
 	'extensions' => array(
 		'already_enabled' => '%s ist bereits aktiviert',
+		'cannot_remove' => '%s kann nicht gelöscht werden',
 		'disable' => array(
 			'ko' => '%s kann nicht deaktiviert werden. Für Details <a href="%s">prüfen Sie die FreshRSS-Protokolle</a>.',
 			'ok' => '%s ist jetzt deaktiviert',
@@ -41,6 +48,7 @@ return array(
 		'no_access' => 'Sie haben keinen Zugang zu %s',
 		'not_enabled' => '%s ist noch nicht aktiviert',
 		'not_found' => '%s existiert nicht',
+		'removed' => '%s wurde gelöscht',
 	),
 	'import_export' => array(
 		'export_no_zip_extension' => 'Die ZIP-Erweiterung fehlt auf Ihrem Server. Bitte versuchen Sie die Dateien eine nach der anderen zu exportieren.',
@@ -78,6 +86,7 @@ return array(
 			'actualizeds' => 'Die RSS-Feeds sind aktualisiert worden',
 			'added' => 'Der RSS-Feed <em>%s</em> ist hinzugefügt worden',
 			'already_subscribed' => 'Sie haben <em>%s</em> bereits abonniert',
+			'cache_cleared' => '<em>%s</em> Zwischenspeicher wurde geleert',
 			'deleted' => 'Der Feed ist gelöscht worden',
 			'error' => 'Der Feed kann nicht aktualisiert werden',
 			'internal_problem' => 'Der RSS-Feed konnte nicht hinzugefügt werden. Für Details <a href="%s">prüfen Sie die FreshRSS-Protokolle</a>.',
@@ -86,10 +95,24 @@ return array(
 			'n_entries_deleted' => 'Die %d Artikel sind gelöscht worden',
 			'no_refresh' => 'Es gibt keinen Feed zum Aktualisieren…',
 			'not_added' => '<em>%s</em> konnte nicht hinzugefügt werden',
+			'not_found' => 'Der Feed konnte nicht gefunden werden',
 			'over_max' => 'Sie haben Ihre Feeds-Limite erreicht (%d)',
+			'reloaded' => '<em>%s</em> wurde neugeladen',
+			'selector_preview' => array(
+				'http_error' => 'Website-Inhalt konnte nicht geladen werden.',
+				'no_entries' => 'In diesem Feed gibt es keine Artikel. Um eine Vorschau zu erstellen, muss mindestens ein Artikel vorhanden sein.',
+				'no_feed' => 'Interner Fehler (Feed konnte nicht gefunden werden).',
+				'no_result' => 'Die Auswahl ergab keine Ergebnisse. Der Originaltext des Feeds wird daher angezeigt.',
+				'selector_empty' => 'Die Auswahl ist leer. Sie müssen einen definieren um eine Vorschau zu erstellen.',
+			),
 			'updated' => 'Der Feed ist aktualisiert worden',
 		),
 		'purge_completed' => 'Bereinigung abgeschlossen (%d Artikel gelöscht)',
+	),
+	'tag' => array(
+		'created' => 'Tag "%s" wurde erstellt.',
+		'name_exists' => 'Tag Name existiert bereits.',
+		'renamed' => 'Der Tag "%s" wurde umbenannt in "%s".',
 	),
 	'update' => array(
 		'can_apply' => 'FreshRSS wird nun auf die <strong>Version %s</strong> aktualisiert.',
@@ -101,16 +124,16 @@ return array(
 	),
 	'user' => array(
 		'created' => array(
-			'_' => 'Der Benutzer %s ist erstellt worden',
-			'error' => 'Der Benutzer %s kann nicht erstellt werden',
+			'_' => 'Der Benutzer %s wurde erstellt',
+			'error' => 'Der Benutzer %s konnte nicht erstellt werden',
 		),
 		'deleted' => array(
-			'_' => 'Der Benutzer %s ist gelöscht worden',
-			'error' => 'Der Benutzer %s kann nicht gelöscht werden',
+			'_' => 'Der Benutzer %s wurde gelöscht',
+			'error' => 'Der Benutzer %s konnte nicht gelöscht werden',
 		),
 		'updated' => array(
 			'_' => 'Benutzer %s wurde aktualisiert',
-			'error' => 'Benutzer %s wurde nicht aktualisiert',
+			'error' => 'Benutzer %s konnte nicht aktualisiert werden',
 		),
 	),
 );

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * An extension manager to load extensions present in EXTENSIONS_PATH.
+ * An extension manager to load extensions present in CORE_EXTENSIONS_PATH and THIRDPARTY_EXTENSIONS_PATH.
  *
  * @todo see coding style for methods!!
  */
@@ -15,27 +15,63 @@ class Minz_ExtensionManager {
 
 	// List of available hooks. Please keep this list sorted.
 	private static $hook_list = array(
-		'entry_before_display' => array(  // function($entry) -> Entry | null
+		'check_url_before_add' => array(	// function($url) -> Url | null
 			'list' => array(),
 			'signature' => 'OneToOne',
 		),
-		'entry_before_insert' => array(  // function($entry) -> Entry | null
+		'entry_before_display' => array(	// function($entry) -> Entry | null
 			'list' => array(),
 			'signature' => 'OneToOne',
 		),
-		'feed_before_insert' => array(  // function($feed) -> Feed | null
+		'entry_before_insert' => array(	// function($entry) -> Entry | null
 			'list' => array(),
 			'signature' => 'OneToOne',
 		),
-		'post_update' => array(  // function(none) -> none
+		'feed_before_actualize' => array(	// function($feed) -> Feed | null
+			'list' => array(),
+			'signature' => 'OneToOne',
+		),
+		'feed_before_insert' => array(	// function($feed) -> Feed | null
+			'list' => array(),
+			'signature' => 'OneToOne',
+		),
+		'freshrss_init' => array(	// function() -> none
 			'list' => array(),
 			'signature' => 'NoneToNone',
 		),
-		'nav_reading_modes' => array(  // function($readingModes = array) -> array | null
+		'freshrss_user_maintenance' => array(	// function() -> none
+			'list' => array(),
+			'signature' => 'NoneToNone',
+		),
+		'js_vars' => array(	// function($vars = array) -> array | null
 			'list' => array(),
 			'signature' => 'OneToOne',
 		),
-		'simplepie_before_init' => array(  // function($simplePie, $feed) -> none
+		'menu_admin_entry' => array(	// function() -> string
+			'list' => array(),
+			'signature' => 'NoneToString',
+		),
+		'menu_configuration_entry' => array(	// function() -> string
+			'list' => array(),
+			'signature' => 'NoneToString',
+		),
+		'menu_other_entry' => array(	// function() -> string
+			'list' => array(),
+			'signature' => 'NoneToString',
+		),
+		'nav_menu' => array(	// function() -> string
+			'list' => array(),
+			'signature' => 'NoneToString',
+		),
+		'nav_reading_modes' => array(	// function($readingModes = array) -> array | null
+			'list' => array(),
+			'signature' => 'OneToOne',
+		),
+		'post_update' => array(	// function(none) -> none
+			'list' => array(),
+			'signature' => 'NoneToNone',
+		),
+		'simplepie_before_init' => array(	// function($simplePie, $feed) -> none
 			'list' => array(),
 			'signature' => 'PassArguments',
 		),
@@ -54,16 +90,17 @@ class Minz_ExtensionManager {
 	 * inherit from Minz_Extension class.
 	 */
 	public static function init() {
-		$list_potential_extensions = array_values(array_diff(
-			scandir(EXTENSIONS_PATH),
-			array('..', '.')
-		));
+		$list_core_extensions = array_diff(scandir(CORE_EXTENSIONS_PATH), [ '..', '.' ]);
+		$list_thirdparty_extensions = array_diff(scandir(THIRDPARTY_EXTENSIONS_PATH), [ '..', '.' ], $list_core_extensions);
+		array_walk($list_core_extensions, function (&$s) { $s = CORE_EXTENSIONS_PATH . '/' . $s; });
+		array_walk($list_thirdparty_extensions, function (&$s) { $s = THIRDPARTY_EXTENSIONS_PATH . '/' . $s; });
+
+		$list_potential_extensions = array_merge($list_core_extensions, $list_thirdparty_extensions);
 
 		$system_conf = Minz_Configuration::get('system');
 		self::$ext_auto_enabled = $system_conf->extensions_enabled;
 
-		foreach ($list_potential_extensions as $ext_dir) {
-			$ext_pathname = EXTENSIONS_PATH . '/' . $ext_dir;
+		foreach ($list_potential_extensions as $ext_pathname) {
 			if (!is_dir($ext_pathname)) {
 				continue;
 			}
@@ -87,7 +124,7 @@ class Minz_ExtensionManager {
 
 			// Try to load extension itself
 			$extension = self::load($meta_json);
-			if (!is_null($extension)) {
+			if ($extension != null) {
 				self::register($extension);
 			}
 		}
@@ -107,9 +144,7 @@ class Minz_ExtensionManager {
 	 */
 	public static function isValidMetadata($meta) {
 		$valid_chars = array('_');
-		return !(empty($meta['name']) ||
-		         empty($meta['entrypoint']) ||
-		         !ctype_alnum(str_replace($valid_chars, '', $meta['entrypoint'])));
+		return !(empty($meta['name']) || empty($meta['entrypoint']) || !ctype_alnum(str_replace($valid_chars, '', $meta['entrypoint'])));
 	}
 
 	/**
@@ -126,8 +161,7 @@ class Minz_ExtensionManager {
 
 		// Test if the given extension class exists.
 		if (!class_exists($ext_class_name)) {
-			Minz_Log::warning('`' . $ext_class_name .
-			                  '` cannot be found in `' . $entry_point_filename . '`');
+			Minz_Log::warning("`{$ext_class_name}` cannot be found in `{$entry_point_filename}`");
 			return null;
 		}
 
@@ -137,14 +171,13 @@ class Minz_ExtensionManager {
 			$extension = new $ext_class_name($info);
 		} catch (Exception $e) {
 			// We cannot load the extension? Invalid!
-			Minz_Log::warning('Invalid extension `' . $ext_class_name . '`: ' . $e->getMessage());
+			Minz_Log::warning("Invalid extension `{$ext_class_name}`: " . $e->getMessage());
 			return null;
 		}
 
 		// Test if class is correct.
 		if (!($extension instanceof Minz_Extension)) {
-			Minz_Log::warning('`' . $ext_class_name .
-			                  '` is not an instance of `Minz_Extension`');
+			Minz_Log::warning("`{$ext_class_name}` is not an instance of `Minz_Extension`");
 			return null;
 		}
 
@@ -155,7 +188,7 @@ class Minz_ExtensionManager {
 	 * Add the extension to the list of the known extensions ($ext_list).
 	 *
 	 * If the extension is present in $ext_auto_enabled and if its type is "system",
-	 * it will be enabled in the same time.
+	 * it will be enabled at the same time.
 	 *
 	 * @param Minz_Extension $ext a valid extension.
 	 */
@@ -183,6 +216,10 @@ class Minz_ExtensionManager {
 		if (isset(self::$ext_list[$ext_name])) {
 			$ext = self::$ext_list[$ext_name];
 			self::$ext_list_enabled[$ext_name] = $ext;
+
+			if (method_exists($ext, 'autoload')) {
+				spl_autoload_register([$ext, 'autoload']);
+			}
 			$ext->enable();
 			$ext->init();
 		}
@@ -302,6 +339,23 @@ class Minz_ExtensionManager {
 			}
 
 			$arg = $result;
+		}
+		return $result;
+	}
+
+	/**
+	 * Call a hook which takes no argument and returns a string.
+	 *
+	 * The result is concatenated between each hook and the final string is
+	 * returned.
+	 *
+	 * @param string $hook_name is the hook to call.
+	 * @return a concatenated string, result of the call to all the hooks.
+	 */
+	private static function callNoneToString($hook_name) {
+		$result = '';
+		foreach (self::$hook_list[$hook_name]['list'] as $function) {
+			$result = $result . call_user_func($function);
 		}
 		return $result;
 	}

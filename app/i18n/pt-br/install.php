@@ -33,7 +33,7 @@ return array(
 		'_' => 'Verificações',
 		'already_installed' => 'Verificamos que o FreshRSS já está instalado!',
 		'cache' => array(
-			'nok' => 'Verifique as permissões no diretório <em>./data/cache</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
+			'nok' => 'Verifique as permissões no diretório <em>%s</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
 			'ok' => 'Permissões no diretório cache estão corretos.',
 		),
 		'ctype' => array(
@@ -45,7 +45,7 @@ return array(
 			'ok' => 'Você tem a biblioteca cURL.',
 		),
 		'data' => array(
-			'nok' => 'Verifique as permissões no diretório <em>./data</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
+			'nok' => 'Verifique as permissões no diretório <em>%s</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
 			'ok' => 'Permissões no diretório data estão corretos.',
 		),
 		'dom' => array(
@@ -53,28 +53,20 @@ return array(
 			'ok' => 'Você tem a biblioteca necessária para navegar pelo DOM.',
 		),
 		'favicons' => array(
-			'nok' => 'Verifique as permissões no diretório <em>./data/favicons</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
+			'nok' => 'Verifique as permissões no diretório <em>%s</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
 			'ok' => 'Permissões no diretório favicons estão corretos.',
 		),
 		'fileinfo' => array(
 			'nok' => 'Não foi possível encontrar a biblioteca fileinfo do PHP (fileinfo).',
 			'ok' => 'Você tem a biblioteca fileinfo.',
 		),
-		'http_referer' => array(
-			'nok' => 'Por favor verifique se você não está alterando seu HTTP REFERER.',
-			'ok' => 'Seu HTTP REFERER é conhecido e corresponde ao seu servidor.',
-		),
 		'json' => array(
 			'nok' => 'Não foi possível encontrar JSON (php-json).',
 			'ok' => 'Você tem a extensão JSON.',
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'Não foi possível encontrar o framework Minz.',
-			'ok' => 'Você tem o framework Minz.',
+			'nok' => 'Não foi possível encontrar a biblioteca recomendada para o Unicode (mbstring).',
+			'ok' => 'Você tem a biblioteca recomendada para o Unicode (mbstring).',
 		),
 		'pcre' => array(
 			'nok' => 'Não foi possível encontrar uma biblioteca necessário para expressões regulares (php-pcre).',
@@ -88,8 +80,13 @@ return array(
 			'nok' => 'Sua versão do PHP é %s mas FreshRSS requer ao menos a versão %s.',
 			'ok' => 'Sua versão do PHP é %s, que é compatível com o FreshRSS.',
 		),
+		'tmp' => array(
+			'nok' => 'Verifiquei as permissões no diretório <em>%s</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
+			'ok' => 'Permissions on the temp directory are good.',	// TODO - Translation
+		),
+		'unknown_process_username' => 'unknown',	// TODO - Translation
 		'users' => array(
-			'nok' => 'Verifiquei as permissões no diretório <em>./data/users</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
+			'nok' => 'Verifiquei as permissões no diretório <em>%s</em>. O servidor HTTP deve ter direitos para escrever dentro desta pasta.',
 			'ok' => 'Permissões no diretório users estão corretos.',
 		),
 		'xml' => array(
@@ -102,22 +99,25 @@ return array(
 		'ok' => 'Configurações gerais foram salvas.',
 	),
 	'congratulations' => 'Parabéns!',
-	'default_user' => 'Usuário do usuário padrão <small>(máximo de 16 caracteres alphanumericos)</small>',
+	'default_user' => 'Usuário do usuário padrão <small>(máximo de 16 caracteres alfanuméricos)</small>',
 	'delete_articles_after' => 'Remover artigos depois',
 	'fix_errors_before' => 'Por favor solucione os erros antes de ir para o próximo passo.',
-	'javascript_is_better' => 'FreshRSS é mais agradável com o JavaScript ativo',
+	'javascript_is_better' => 'O FreshRSS é mais agradável com o JavaScript ativo',
 	'js' => array(
 		'confirm_reinstall' => 'Você irá perder suas configurações anteriores ao reinstalar o FreshRSS. Você está certo que deseja continuar?',
 	),
 	'language' => array(
 		'_' => 'Idioma',
-		'choose' => 'Escolhar o idioma para o FreshRSS',
-		'defined' => 'Idioma foi definido.',
+		'choose' => 'Escolha o idioma para o FreshRSS',
+		'defined' => 'O idioma foi definido.',
 	),
-	'not_deleted' => 'Algo deu errado; você deve deletar o arquivo <em>%s</em> manualmente.',
+	'missing_applied_migrations' => 'Something went wrong; you should create an empty file <em>%s</em> manually.',	// TODO - Translation
 	'ok' => 'O processo de instalação foi um sucesso.',
+	'session' => array(
+		'nok' => 'The web server seems to be incorrectly configured for cookies required for PHP sessions!',	// TODO - Translation
+	),
 	'step' => 'passo %d',
 	'steps' => 'Passos',
-	'title' => 'Instalação · FreshRSS',
 	'this_is_the_end' => 'Este é o final',
+	'title' => 'Instalação · FreshRSS',
 );

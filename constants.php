@@ -2,9 +2,12 @@
 //NB: Do not edit; use ./constants.local.php instead.
 
 //<Not customisable>
-define('FRESHRSS_VERSION', '1.14.3');
+define('FRESHRSS_MIN_PHP_VERSION', '5.6.0');
+define('FRESHRSS_VERSION', '1.18.1-dev');
 define('FRESHRSS_WEBSITE', 'https://freshrss.org');
 define('FRESHRSS_WIKI', 'https://freshrss.github.io/FreshRSS/');
+
+define('APP_NAME', 'FreshRSS');
 
 define('FRESHRSS_PATH', __DIR__);
 define('PUBLIC_PATH', FRESHRSS_PATH . '/p');
@@ -13,7 +16,8 @@ define('INDEX_PATH', PUBLIC_PATH . PUBLIC_TO_INDEX_PATH);
 define('PUBLIC_RELATIVE', '..');
 define('LIB_PATH', FRESHRSS_PATH . '/lib');
 define('APP_PATH', FRESHRSS_PATH . '/app');
-define('EXTENSIONS_PATH', FRESHRSS_PATH . '/extensions');
+define('CORE_EXTENSIONS_PATH', LIB_PATH . '/core-extensions');
+define('TESTS_PATH', FRESHRSS_PATH . '/tests');
 //</Not customisable>
 
 function safe_define($name, $value) {
@@ -32,6 +36,7 @@ safe_define('FRESHRSS_USERAGENT', 'FreshRSS/' . FRESHRSS_VERSION . ' (' . PHP_OS
 // PHP text output compression http://php.net/ob_gzhandler (better to do it at Web server level)
 safe_define('PHP_COMPRESSION', false);
 
+safe_define('COPY_LOG_TO_SYSLOG', filter_var(getenv('COPY_LOG_TO_SYSLOG'), FILTER_VALIDATE_BOOLEAN));
 // For cases when syslog is not available
 safe_define('COPY_SYSLOG_TO_STDERR', filter_var(getenv('COPY_SYSLOG_TO_STDERR'), FILTER_VALIDATE_BOOLEAN));
 
@@ -48,6 +53,11 @@ safe_define('API_LOG', USERS_PATH . '/_/log_api.txt');
 safe_define('CACHE_PATH', DATA_PATH . '/cache');
 safe_define('PSHB_LOG', USERS_PATH . '/_/log_pshb.txt');
 safe_define('PSHB_PATH', DATA_PATH . '/PubSubHubbub');
+safe_define('EXTENSIONS_DATA', DATA_PATH . '/extensions-data');
+safe_define('THIRDPARTY_EXTENSIONS_PATH', FRESHRSS_PATH . '/extensions');
+
+//Deprecated constants
+safe_define('EXTENSIONS_PATH', FRESHRSS_PATH . '/extensions');
 
 //Directory used for feed mutex with *.freshrss.lock files. Must be writable.
 safe_define('TMP_PATH', sys_get_temp_dir());

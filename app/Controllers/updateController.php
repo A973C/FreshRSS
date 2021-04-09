@@ -23,24 +23,25 @@ class FreshRSS_update_Controller extends Minz_ActionController {
 		}
 		chdir($cwd);
 		$line = is_array($output) ? implode('; ', $output) : '' . $output;
-		return strpos($line, '[behind') !== false;
+		return strpos($line, '[behind') !== false || strpos($line, '[ahead') !== false;
 	}
 
 	public static function gitPull() {
 		$cwd = getcwd();
 		chdir(FRESHRSS_PATH);
-		$output = array();
+		$output = '';
 		$return = 1;
 		try {
-			exec('git clean -f -d -f', $output, $return);
+			exec('git fetch', $output, $return);
 			if ($return == 0) {
-				exec('git pull --ff-only', $output, $return);
-			} else {
-				$line = is_array($output) ? implode('; ', $output) : '' . $output;
-				Minz_Log::warning('git clean warning:' . $line);
+				exec('git reset --hard FETCH_HEAD', $output, $return);
 			}
 		} catch (Exception $e) {
-			Minz_Log::warning('git pull error:' . $e->getMessage());
+			Minz_Log::warning('Git error:' . $e->getMessage());
+			if ($output == '') {
+				$output = $e->getMessage();
+			}
+			$return = 1;
 		}
 		chdir($cwd);
 		$line = is_array($output) ? implode('; ', $output) : '' . $output;
@@ -51,6 +52,8 @@ class FreshRSS_update_Controller extends Minz_ActionController {
 		if (!FreshRSS_Auth::hasAccess('admin')) {
 			Minz_Error::error(403);
 		}
+
+		include_once(LIB_PATH . '/lib_install.php');
 
 		invalidateHttpCache();
 
@@ -89,7 +92,7 @@ class FreshRSS_update_Controller extends Minz_ActionController {
 	}
 
 	public function checkAction() {
-		$this->view->change_view('update', 'index');
+		$this->view->_path('update/index.phtml');
 
 		if (file_exists(UPDATE_FILENAME)) {
 			// There is already an update file to apply: we don't need to check
@@ -189,8 +192,7 @@ class FreshRSS_update_Controller extends Minz_ActionController {
 				@file_put_contents(join_path(DATA_PATH, 'last_update.txt'), '');
 				Minz_Request::good(_t('feedback.update.finished'));
 			} else {
-				Minz_Request::bad(_t('feedback.update.error', $res),
-				                  array('c' => 'update', 'a' => 'index'));
+				Minz_Request::bad(_t('feedback.update.error', $res), [ 'c' => 'update', 'a' => 'index' ]);
 			}
 		} else {
 			$res = false;
@@ -216,8 +218,7 @@ class FreshRSS_update_Controller extends Minz_ActionController {
 					'params' => array('post_conf' => true)
 				), true);
 			} else {
-				Minz_Request::bad(_t('feedback.update.error', $res),
-				                  array('c' => 'update', 'a' => 'index'));
+				Minz_Request::bad(_t('feedback.update.error', $res), [ 'c' => 'update', 'a' => 'index' ]);
 			}
 		}
 	}

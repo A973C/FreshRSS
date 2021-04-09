@@ -67,12 +67,8 @@ return array(
 			'ok' => 'JSON eklentisi sorunsuz.',
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'Minz framework eksik.',
-			'ok' => 'Minz framework sorunsuz.',
+			'nok' => 'Cannot find the recommended mbstring library for Unicode.',	// TODO - Translation
+			'ok' => 'You have the recommended mbstring library for Unicode.',	// TODO - Translation
 		),
 		'pcre' => array(
 			'nok' => 'Düzenli ifadeler kütüphanesi eksik (php-pcre).',
@@ -106,23 +102,23 @@ return array(
 		),
 	),
 	'extensions' => array(
-		'author' => 'Author',	//TODO - Translation
-		'community' => 'Available community extensions',	//TODO - Translation
-		'description' => 'Description',	//TODO - Translation
+		'author' => 'Author',	// TODO - Translation
+		'community' => 'Available community extensions',	// TODO - Translation
+		'description' => 'Description',	// TODO - Translation
 		'disabled' => 'Pasif',
 		'empty_list' => 'Yüklenmiş eklenti bulunmamaktadır',
 		'enabled' => 'Aktif',
-		'latest' => 'Installed',	//TODO - Translation
-		'name' => 'Name',	//TODO - Translation
+		'latest' => 'Installed',	// TODO - Translation
+		'name' => 'Name',	// TODO - Translation
 		'no_configure_view' => 'Bu eklenti yapılandırılamaz.',
 		'system' => array(
 			'_' => 'Sistem eklentileri',
 			'no_rights' => 'Sistem eklentileri (düzenleme hakkınız yok)',
 		),
 		'title' => 'Eklentiler',
-		'update' => 'Update available',	//TODO - Translation
+		'update' => 'Update available',	// TODO - Translation
 		'user' => 'Kullanıcı eklentileri',
-		'version' => 'Version',	//TODO - Translation
+		'version' => 'Version',	// TODO - Translation
 	),
 	'stats' => array(
 		'_' => 'İstatistikler',
@@ -159,13 +155,14 @@ return array(
 	'system' => array(
 		'_' => 'Sistem yapılandırması',
 		'auto-update-url' => 'Otomatik güncelleme sunucu URL',
+		'cookie-duration' => array(
+			'help' => 'in seconds',	// TODO - Translation
+			'number' => 'Duration to keep logged in',	// TODO - Translation
+		),
+		'force_email_validation' => 'Force email address validation',	// TODO - Translation
 		'instance-name' => 'Örnek isim',
 		'max-categories' => 'Kullanıcı başına kategori limiti',
 		'max-feeds' => 'Kullanıcı başına akış limiti',
-		'cookie-duration' => array(
-			'help' => 'in seconds', // @todo translate
-			'number' => 'Duration to keep logged in', // @todo translate
-		),
 		'registration' => array(
 			'help' => '0 sınır yok anlamındadır',
 			'number' => 'En fazla hesap sayısı',
@@ -181,17 +178,27 @@ return array(
 		'title' => 'Sistem güncelleme',
 	),
 	'user' => array(
+		'admin' => 'Administrator',	// TODO - Translation
+		'article_count' => 'Articles',	// TODO - Translation
 		'articles_and_size' => '%s makale (%s)',
+		'back_to_manage' => '← Return to user list',	// TODO - Translation
 		'create' => 'Yeni kullanıcı oluştur',
-		'delete_users' => 'Delete user',	//TODO - Translation
+		'database_size' => 'Database size',	// TODO - Translation
+		'delete_users' => 'Delete user',	// TODO - Translation
+		'email' => 'Email address',	// TODO - Translation
+		'enabled' => 'Enabled',	// TODO - Translation
+		'feed_count' => 'Feeds',	// TODO - Translation
+		'is_admin' => 'Is admin',	// TODO - Translation
 		'language' => 'Dil',
+		'last_user_activity' => 'Last user activity',	// TODO - Translation
+		'list' => 'User list',	// TODO - Translation
 		'number' => 'Oluşturulmuş %d hesap var',
 		'numbers' => 'Oluşturulmuş %d hesap var',
 		'password_form' => 'Şifre<br /><small>(Tarayıcı girişi için)</small>',
 		'password_format' => 'En az 7 karakter',
-		'selected' => 'Selected user',	//TODO - Translation
+		'selected' => 'Selected user',	// TODO - Translation
 		'title' => 'Kullanıcıları yönet',
-		'update_users' => 'Update user',	//TODO - Translation
+		'update_users' => 'Update user',	// TODO - Translation
 		'user_list' => 'Kullanıcı listesi',
 		'username' => 'Kullanıcı adı',
 		'users' => 'Kullanıcılar',

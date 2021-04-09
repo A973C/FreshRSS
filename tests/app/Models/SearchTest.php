@@ -66,6 +66,7 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 			array('intitle:"word1 word2\' word3"', array("word1 word2' word3"), null),
 			array("intitle:'word1 word2\" word3'", array('word1 word2" word3'), null),
 			array("intitle:word1 'word2 word3' word4", array('word1'), array('word2 word3', 'word4')),
+			['intitle:word1+word2', ['word1+word2'], null],
 		);
 	}
 
@@ -102,6 +103,7 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 			array('author:"word1 word2\' word3"', array("word1 word2' word3"), null),
 			array("author:'word1 word2\" word3'", array('word1 word2" word3'), null),
 			array("author:word1 'word2 word3' word4", array('word1'), array('word2 word3', 'word4')),
+			['author:word1+word2', ['word1+word2'], null],
 		);
 	}
 
@@ -129,6 +131,7 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 			array('inurl:"word1 word2"', array('"word1'), array('word2"')),
 			array('inurl:word1 word2 inurl:word3', array('word1', 'word3'), array('word2')),
 			array("inurl:word1 'word2 word3' word4", array('word1'), array('word2 word3', 'word4')),
+			['inurl:word1+word2', ['word1+word2'], null],
 		);
 	}
 
@@ -150,8 +153,8 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 	public function provideDateSearch() {
 		return array(
 			array('date:2007-03-01T13:00:00Z/2008-05-11T15:30:00Z', '1172754000', '1210519800'),
-			array('date:2007-03-01T13:00:00Z/P1Y2M10DT2H30M', '1172754000', '1210516199'),
-			array('date:P1Y2M10DT2H30M/2008-05-11T15:30:00Z', '1172757601', '1210519800'),
+			array('date:2007-03-01T13:00:00Z/P1Y2M10DT2H30M', '1172754000', '1210519799'),
+			array('date:P1Y2M10DT2H30M/2008-05-11T15:30:00Z', '1172754001', '1210519800'),
 			array('date:2007-03-01/2008-05-11', strtotime('2007-03-01'), strtotime('2008-05-12') - 1),
 			array('date:2007-03-01/', strtotime('2007-03-01'), ''),
 			array('date:/2008-05-11', '', strtotime('2008-05-12') - 1),
@@ -176,8 +179,8 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 	public function providePubdateSearch() {
 		return array(
 			array('pubdate:2007-03-01T13:00:00Z/2008-05-11T15:30:00Z', '1172754000', '1210519800'),
-			array('pubdate:2007-03-01T13:00:00Z/P1Y2M10DT2H30M', '1172754000', '1210516199'),
-			array('pubdate:P1Y2M10DT2H30M/2008-05-11T15:30:00Z', '1172757601', '1210519800'),
+			array('pubdate:2007-03-01T13:00:00Z/P1Y2M10DT2H30M', '1172754000', '1210519799'),
+			array('pubdate:P1Y2M10DT2H30M/2008-05-11T15:30:00Z', '1172754001', '1210519800'),
 			array('pubdate:2007-03-01/2008-05-11', strtotime('2007-03-01'), strtotime('2008-05-12') - 1),
 			array('pubdate:2007-03-01/', strtotime('2007-03-01'), ''),
 			array('pubdate:/2008-05-11', '', strtotime('2008-05-12') - 1),
@@ -208,6 +211,7 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 			array('#"word1 word2"', array('"word1'), array('word2"')),
 			array('#word1 #word2', array('word1', 'word2'), null),
 			array("#word1 'word2 word3' word4", array('word1'), array('word2 word3', 'word4')),
+			['#word1+word2', ['word1 word2'], null],
 		);
 	}
 
@@ -224,7 +228,8 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 	 * @param array $tags_value
 	 * @param string|null $search_value
 	 */
-	public function test__construct_whenInputContainsMultipleKeywords_setsValues($input, $author_value, $min_date_value, $max_date_value, $intitle_value, $inurl_value, $min_pubdate_value, $max_pubdate_value, $tags_value, $search_value) {
+	public function test__construct_whenInputContainsMultipleKeywords_setsValues($input, $author_value, $min_date_value,
+			$max_date_value, $intitle_value, $inurl_value, $min_pubdate_value, $max_pubdate_value, $tags_value, $search_value) {
 		$search = new FreshRSS_Search($input);
 		$this->assertEquals($author_value, $search->getAuthor());
 		$this->assertEquals($min_date_value, $search->getMinDate());
@@ -290,5 +295,4 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 			),
 		);
 	}
-
 }

@@ -33,7 +33,7 @@ return array(
 		'_' => 'Kontroller',
 		'already_installed' => 'FreshRSS zaten yüklü!',
 		'cache' => array(
-			'nok' => '<em>./data/cache</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı',
+			'nok' => '<em>%s/em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı.',
 			'ok' => 'Önbellek klasörü yetkileri sorunsuz.',
 		),
 		'ctype' => array(
@@ -45,7 +45,7 @@ return array(
 			'ok' => 'cURL eklentisi sorunsuz.',
 		),
 		'data' => array(
-			'nok' => '<em>./data</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı',
+			'nok' => '<em>%s</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı.',
 			'ok' => 'Veri klasörü yetkileri sorunsuz.',
 		),
 		'dom' => array(
@@ -53,28 +53,20 @@ return array(
 			'ok' => 'DOM kütüphanesi sorunsuz.',
 		),
 		'favicons' => array(
-			'nok' => '<em>./data/favicons</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı',
+			'nok' => '<em>%s</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı.',
 			'ok' => 'Site ikonu klasörü yetkileri sorunsuz.',
 		),
 		'fileinfo' => array(
 			'nok' => 'PHP fileinfo eksik (fileinfo package).',
 			'ok' => 'fileinfo eklentisi sorunsuz.',
 		),
-		'http_referer' => array(
-			'nok' => 'Lütfen HTTP REFERER değiştirmediğinize emin olun.',
-			'ok' => 'HTTP REFERER ve sunucunuz arası iletişim sorunsuz.',
-		),
 		'json' => array(
 			'nok' => 'Tavsiye edilen JSON çözümleme kütüphanesi eksik.',
 			'ok' => 'Tavsiye edilen JSON çözümleme kütüphanesi sorunsuz.',
 		),
 		'mbstring' => array(
-			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	//TODO - Translation
-			'ok' => 'You have the recommended library mbstring for Unicode.',	//TODO - Translation
-		),
-		'minz' => array(
-			'nok' => 'Minz framework eksik.',
-			'ok' => 'Minz framework sorunsuz.',
+			'nok' => 'Cannot find the recommended library mbstring for Unicode.',	// TODO - Translation
+			'ok' => 'You have the recommended library mbstring for Unicode.',	// TODO - Translation
 		),
 		'pcre' => array(
 			'nok' => 'Düzenli ifadeler kütüphanesi eksik (php-pcre).',
@@ -88,13 +80,18 @@ return array(
 			'nok' => 'PHP versiyonunuz %s fakat FreshRSS için gerekli olan en düşük sürüm %s.',
 			'ok' => 'PHP versiyonunuz %s, FreshRSS ile tam uyumlu.',
 		),
+		'tmp' => array(
+			'nok' => '<em>%s</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı.',
+			'ok' => 'Permissions on the temp directory are good.',	// TODO - Translation
+		),
+		'unknown_process_username' => 'unknown',	// TODO - Translation
 		'users' => array(
-			'nok' => '<em>./data/users</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı',
+			'nok' => '<em>%s</em> klasör yetkisini kontrol edin. HTTP yazma yetkisi olmalı.',
 			'ok' => 'Kullanıcılar klasörü yetkileri sorunsuz.',
 		),
 		'xml' => array(
 			'nok' => 'You lack the required library to parse XML.',
-			'ok' => 'You have the required library to parse XML.',
+			'ok' => 'You have the required library to parse XML.',	// TODO - Translation
 		),
 	),
 	'conf' => array(
@@ -114,10 +111,13 @@ return array(
 		'choose' => 'FreshRSS için bir dil seçin',
 		'defined' => 'Dil belirlendi.',
 	),
-	'not_deleted' => 'Hata meydana geldi; <em>%s</em> dosyasını elle silmelisiniz.',
+	'missing_applied_migrations' => 'Something went wrong; you should create an empty file <em>%s</em> manually.',	// TODO - Translation
 	'ok' => 'Kurulum başarıyla tamamlandı.',
+	'session' => array(
+		'nok' => 'The web server seems to be incorrectly configured for cookies required for PHP sessions!',	// TODO - Translation
+	),
 	'step' => 'adım %d',
 	'steps' => 'Adımlar',
-	'title' => 'Kurulum · FreshRSS',
 	'this_is_the_end' => 'Son Adım',
+	'title' => 'Kurulum · FreshRSS',
 );

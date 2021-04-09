@@ -1,6 +1,24 @@
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 "use strict";
-/* globals context, openNotification, xmlHttpRequestJson */
+/* globals context, openNotification, openPopupWithSource, xmlHttpRequestJson */
 /* jshint esversion:6, strict:global */
+
+function fix_popup_preview_selector() {
+	const link = document.getElementById('popup-preview-selector');
+
+	if (!link) {
+		return;
+	}
+
+	link.addEventListener('click', function (ev) {
+		const selector_entries = document.getElementById('path_entries').value;
+		const href = link.href.replace('selector-token', encodeURIComponent(selector_entries));
+
+		openPopupWithSource(href);
+
+		ev.preventDefault();
+	});
+}
 
 //<crypto form (Web login)>
 function poormanSalt() {	//If crypto.getRandomValues is not available
@@ -10,6 +28,10 @@ function poormanSalt() {	//If crypto.getRandomValues is not available
 		text += base.charAt(Math.floor(Math.random() * 64));
 	}
 	return text;
+}
+
+function forgetOpenCategories() {
+	localStorage.removeItem('FreshRSS_open_categories');
 }
 
 function init_crypto_form() {
@@ -27,8 +49,12 @@ function init_crypto_form() {
 		return;
 	}
 
+	forgetOpenCategories();
+
+	const submit_button = document.getElementById('loginButton');
+	submit_button.disabled = false;
+
 	crypto_form.onsubmit = function (e) {
-		const submit_button = this.querySelector('button[type="submit"]');
 		submit_button.disabled = true;
 		let success = false;
 
@@ -67,61 +93,6 @@ function init_crypto_form() {
 }
 //</crypto form (Web login)>
 
-function init_share_observers() {
-	let shares = document.querySelectorAll('.group-share').length;
-	const shareAdd = document.querySelector('.share.add');
-	if (shareAdd) {
-		shareAdd.onclick = function (ev) {
-				const s = this.parentElement.querySelector('select'),
-					opt = s.options[s.selectedIndex];
-				let row = this.closest('form').getAttribute('data-' + opt.getAttribute('data-form'));
-				row = row.replace(/##label##/g, opt.text);
-				row = row.replace(/##type##/g, opt.value);
-				row = row.replace(/##help##/g, opt.getAttribute('data-help'));
-				row = row.replace(/##key##/g, shares);
-				row = row.replace(/##method##/g, opt.getAttribute('data-method'));
-				row = row.replace(/##field##/g, opt.getAttribute('data-field'));
-				this.closest('.form-group').insertAdjacentHTML('beforebegin', row);
-				shares++;
-				return false;
-			};
-	}
-}
-
-
-function init_remove_observers() {
-	document.querySelectorAll('.post').forEach(function (div) {
-			div.onclick = function (ev) {
-					const a = ev.target.closest('a.remove');
-					if (a) {
-						const remove_what = a.getAttribute('data-remove');
-						if (remove_what !== undefined) {
-							const d = document.getElementById(remove_what);
-							if (d) {
-								d.remove();
-							}
-						}
-						return false;
-					}
-				};
-		});
-}
-
-function init_feed_observers() {
-	const s = document.getElementById('category');
-	if (s && s.matches('select')) {
-		s.onchange = function (ev) {
-				const detail = document.getElementById('new_category_name').parentElement;
-				if (this.value === 'nc') {
-					detail.setAttribute('aria-hidden', 'false');
-					detail.querySelector('input').focus();
-				} else {
-					detail.setAttribute('aria-hidden', 'true');
-				}
-			};
-	}
-}
-
 function init_password_observers() {
 	document.querySelectorAll('.toggle-password').forEach(function (a) {
 			a.onmousedown = function (ev) {
@@ -145,9 +116,13 @@ function init_select_observers() {
 					const opt = s.options[s.selectedIndex],
 						url = opt.getAttribute('data-url');
 					if (url) {
-						s.form.querySelectorAll('[type=submit]').forEach(function (b) {
-								b.disabled = true;
-							});
+						s.disabled = true;
+						s.value = '';
+						if (s.form) {
+							s.form.querySelectorAll('[type=submit]').forEach(function (b) {
+									b.disabled = true;
+								});
+						}
 						location.href = url;
 					}
 				};
@@ -175,6 +150,7 @@ function init_slider_observers() {
 							slider.classList.add('active');
 							closer.classList.add('active');
 							context.ajax_loading = false;
+							fix_popup_preview_selector();
 						};
 					req.send();
 					return false;
@@ -183,10 +159,30 @@ function init_slider_observers() {
 		};
 
 	closer.onclick = function (ev) {
-			closer.classList.remove('active');
-			slider.classList.remove('active');
-			return false;
+			if (data_leave_validation() || confirm(context.i18n.confirmation_default)) {
+				slider.querySelectorAll('form').forEach(function (f) { f.reset(); });
+				closer.classList.remove('active');
+				slider.classList.remove('active');
+				return true;
+			} else {
+				return false;
+			}
 		};
+}
+
+function data_leave_validation() {
+	const ds = document.querySelectorAll('[data-leave-validation]');
+	for (let i = ds.length - 1; i >= 0; i--) {
+		const input = ds[i];
+		if (input.type === 'checkbox' || input.type === 'radio') {
+			if (input.checked != input.getAttribute('data-leave-validation')) {
+				return false;
+			}
+		} else if (input.value != input.getAttribute('data-leave-validation')) {
+			return false;
+		}
+	}
+	return true;
 }
 
 function init_configuration_alert() {
@@ -197,16 +193,8 @@ function init_configuration_alert() {
 			if (window.hasSubmit) {
 				return;
 			}
-			const ds = document.querySelectorAll('[data-leave-validation]');
-			for (let i = ds.length - 1; i >= 0; i--) {
-				const input = ds[i];
-				if (input.type === 'checkbox' || input.type === 'radio') {
-					if (input.checked != input.getAttribute('data-leave-validation')) {
-						return false;
-					}
-				} else if (input.value != input.getAttribute('data-leave-validation')) {
-					return false;
-				}
+			if (!data_leave_validation()) {
+				return false;
 			}
 		};
 }
@@ -220,13 +208,11 @@ function init_extra() {
 		return;
 	}
 	init_crypto_form();
-	init_share_observers();
-	init_remove_observers();
-	init_feed_observers();
 	init_password_observers();
 	init_select_observers();
 	init_slider_observers();
 	init_configuration_alert();
+	fix_popup_preview_selector();
 }
 
 if (document.readyState && document.readyState !== 'loading') {
@@ -239,3 +225,4 @@ if (document.readyState && document.readyState !== 'loading') {
 			init_extra();
 		}, false);
 }
+// @license-end
