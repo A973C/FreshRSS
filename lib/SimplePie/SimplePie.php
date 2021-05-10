@@ -1308,9 +1308,9 @@ class SimplePie
 	}
 
 	/**
-	 * Set the list of domains for which force HTTPS.
+	 * Set the list of domains for which to force HTTPS.
 	 * @see SimplePie_Sanitize::set_https_domains()
-	 * FreshRSS
+	 * @param array List of HTTPS domains. Example array('biz', 'example.com', 'example.org', 'www.example.net').
 	 */
 	public function set_https_domains($domains = array())
 	{
@@ -1622,7 +1622,7 @@ class SimplePie
 	 * Fetch the data via SimplePie_File
 	 *
 	 * If the data is already cached, attempt to fetch it from there instead
-	 * @param SimplePie_Cache|false $cache Cache handler, or false to not load from the cache
+	 * @param SimplePie_Cache_Base|false $cache Cache handler, or false to not load from the cache
 	 * @return array|true Returns true if the data was loaded from the cache, or an array of HTTP headers and sniffed type
 	 */
 	protected function fetch_data(&$cache)
