@@ -19,7 +19,7 @@ if (COPY_SYSLOG_TO_STDERR) {
  * Build a directory path by concatenating a list of directory names.
  *
  * @param $path_parts a list of directory names
- * @return a string corresponding to the final pathname
+ * @return string corresponding to the final pathname
  */
 function join_path() {
 	$path_parts = func_get_args();
@@ -333,7 +333,7 @@ function listUsers() {
  *
  * Note a max_regstrations of 0 means there is no limit.
  *
- * @return true if number of users >= max registrations, false else.
+ * @return boolean true if number of users >= max registrations, false else.
  */
 function max_registrations_reached() {
 	$limit_registrations = FreshRSS_Context::$system_conf->limits['max_registrations'];
@@ -350,7 +350,7 @@ function max_registrations_reached() {
  * objects. If you need a long-time configuration, please don't use this function.
  *
  * @param $username the name of the user of which we want the configuration.
- * @return a Minz_Configuration object, null if the configuration cannot be loaded.
+ * @return Minz_Configuration object, null if the configuration cannot be loaded.
  */
 function get_user_configuration($username) {
 	if (!FreshRSS_user_Controller::checkUsername($username)) {
@@ -499,7 +499,7 @@ function recursive_unlink($dir) {
  * Remove queries where $get is appearing.
  * @param $get the get attribute which should be removed.
  * @param $queries an array of queries.
- * @return the same array whithout those where $get is appearing.
+ * @return array whithout queries where $get is appearing.
  */
 function remove_query_by_get($get, $queries) {
 	$final_queries = array();
@@ -548,15 +548,25 @@ function getNonStandardShortcuts($shortcuts) {
 }
 
 function errorMessage($errorTitle, $error = '') {
-	// Prevent empty <h2> tags by checking if error isn't empty first
-	if ('' !== $error) {
-		$error = htmlspecialchars($error, ENT_NOQUOTES, 'UTF-8');
-		$error = "<h2>{$error}</h2>";
-	}
 	$errorTitle = htmlspecialchars($errorTitle, ENT_NOQUOTES, 'UTF-8');
+
+	$message = '';
+	$details = '';
+	// Prevent empty tags by checking if error isn not empty first
+	if ($error) {
+		$error = htmlspecialchars($error, ENT_NOQUOTES, 'UTF-8');
+
+		// First line is the main message, other lines are the details
+		list($message, $details) = explode("\n", $error, 2);
+
+		$message = "<h2>{$message}</h2>";
+		$details = "<pre>{$details}</pre>";
+	}
+
 	return <<<MSG
 	<h1>{$errorTitle}</h1>
-	{$error}
+	{$message}
+	{$details}
 	<h2>Check the logs</h2>
 	<p>FreshRSS logs are located in <code>./FreshRSS/data/users/*/log*.txt</code></p>
 	<p><em>N.B.:</em> A typical problem is wrong file permissions in the <code>./FreshRSS/data/</code> folder
